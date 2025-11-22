@@ -1,10 +1,11 @@
 import Funcion,Venta,Sala,Asientos
 
 class Main:
-    def __init__(self, Nombre:str, TotalVentasDia:int):
+    def __init__(self, Nombre:str, TotalVentasDia:int, ListaDeVentas:Venta):
         self.Nombre = Nombre
         self.Salas[3]
         self.TotalVentasDia = TotalVentasDia
+        self.ListaDeVentas[None] * 75
 
 
 if __name__=="__main__":
