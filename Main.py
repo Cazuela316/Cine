@@ -8,27 +8,27 @@ class Main:
 
 
 if __name__=="__main__":
-    F1=Funcion("Matiné", "Peli1", 0)
-    F2=Funcion("Vermut", "Peli2", 0)
-    F3=Funcion("Vespertina", "Peli3", 0)
+    F1=Funcion.Funcion("Matiné", "Peli1", 0)
+    F2=Funcion.Funcion("Vermut", "Peli2", 0)
+    F3=Funcion.Funcion("Vespertina", "Peli3", 0)
 
-    F4=Funcion("Matiné", "Peli4", 0)
-    F5=Funcion("Vermut", "Peli5", 0)
-    F6=Funcion("Vespertina", "Peli6", 0)
+    F4=Funcion.Funcion("Matiné", "Peli4", 0)
+    F5=Funcion.Funcion("Vermut", "Peli5", 0)
+    F6=Funcion.Funcion("Vespertina", "Peli6", 0)
 
-    F7=Funcion("Matiné", "Peli7", 0)
-    F8=Funcion("Vermut", "Peli8", 0)
-    F9=Funcion("Vespertina", "Peli9", 0)
+    F7=Funcion.Funcion("Matiné", "Peli7", 0)
+    F8=Funcion.Funcion("Vermut", "Peli8", 0)
+    F9=Funcion.Funcion("Vespertina", "Peli9", 0)
 
-    S1=Sala(1)
+    S1=Sala.Sala(1)
     S1.Funciones[0]=F1
     S1.Funciones[1]=F2
     S1.Funciones[2]=F3
-    S2=Sala(2)
+    S2=Sala.Sala(2)
     S2.Funciones[0]=F4
     S2.Funciones[1]=F5
     S2.Funciones[2]=F6
-    S3=Sala(3)
+    S3=Sala.Sala(3)
     S3.Funciones[0]=F7
     S3.Funciones[1]=F8
     S3.Funciones[2]=F9

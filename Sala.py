@@ -1,5 +1,6 @@
+import Funcion
 class Sala:
-    def __init__(self,Numero:int):
+    def __init__(self,Numero:int, Funciones:Funcion):
         self.Numero = Numero
         self.Funciones[None] * 3
  
