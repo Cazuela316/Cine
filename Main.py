@@ -51,7 +51,7 @@ if __name__=="__main__":
 
     print(V2.Total) 
     
-    V2.Vender(A1, F1, Cine)
+    V2.Vender([A1], F1, Cine)
 
     for j in range(75):
         print(Cine.ListaDeVentas[j], end=' ')
@@ -61,6 +61,6 @@ if __name__=="__main__":
     print("\n\n\n")
 
     for j in range(75):
-        print(Cine.ListaDeVentas[j].Total, end=' ')
+        print(Cine.ListaDeVentas[j], end=' ')
 
     print(A1.Disponible, "   ", V2.Total)
