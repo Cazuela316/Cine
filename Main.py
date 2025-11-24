@@ -62,13 +62,19 @@ if __name__=="__main__":
 
     Cine=Main("Cine-1",100000, None, None, 0)
 
+    def numeros_sala(self, ListaDeVentas):
+        for venta in ListaDeVentas:
+            if venta is not None:
+                print(ListaDeVentas)
+
     print(V2.Total) 
     
     V2.Vender([A1,A2], F1, Cine)
     Cine.Holi(V2)
     V2.Vender([A3,A4], F1, Cine)
     Cine.Holi(V2)
-    S1.resumen_sala([A1])
+    Total_sala=S1.resumen_sala(Cine.ListaDeVentas)
+    print(Total_sala)
 
     for j in range(75):
         print(Cine.ListaDeVentas[j], end=' ')
