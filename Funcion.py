@@ -5,8 +5,8 @@ class Funcion:
         self.EntradasVendidas = EntradasVendidas
         self.Asientos = [[0 for j in range(5)] for i in range(5)]
     
-    filas = 5
-    columnas = 5
+#    filas = 5
+#    columnas = 5
 
 
 
