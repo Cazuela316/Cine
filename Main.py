@@ -15,6 +15,11 @@ class Main:
         self.ListaDeVentas[self.Cont]=V2
         self.Cont=self.Cont+1
 
+def main():
+    app = QApplication(sys.argv)
+    ventana = VentanaP()
+    ventana.show()
+    sys.exit(app.exec())
 
 if __name__=="__main__":
     F1=F.Funcion("Matiné", "Peli1", 0)
