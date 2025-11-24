@@ -1,8 +1,7 @@
 import sys
 import Funcion,Venta,Sala,Asientos
 from PyQt6.QtWidgets import QApplication
-from Ventana import Ventana
-from Admin import AdminVista
+from Ventana import VentanaP
 
 #class Main:
 #    def __init__(self, Nombre:str, TotalVentasDia:int):
@@ -12,7 +11,7 @@ from Admin import AdminVista
 
 def main():
     app = QApplication(sys.argv)
-    ventana = Ventana()
+    ventana = VentanaP()
     ventana.show()
     sys.exit(app.exec())
 
