@@ -1,7 +1,11 @@
+import sys
+import Funcion,Ventas,Sala,Asientos
+from PyQt6.QtWidgets import QApplication
 import Funcion as F
 import Asientos as A
 import Sala as S
 import Ventas as V
+from Ventana import VentanaP
 
 class Main:
     def __init__(self, Nombre:str, TotalVentasDia:int, ListaDeVentas:V, Salas:S,Cont:int):
@@ -11,9 +15,10 @@ class Main:
         self.ListaDeVentas = [None] * 75
         self.Cont = 0
 
-    def Holi (self, Venta:V.Venta):
-        self.ListaDeVentas[self.Cont]=V2
+    def Holi (self, Venta: V.Venta):
+        self.ListaDeVentas[self.Cont]=Venta
         self.Cont=self.Cont+1
+
 
 def main():
     app = QApplication(sys.argv)
@@ -50,18 +55,24 @@ if __name__=="__main__":
     A1=A.Asientos(2,0,0, S1) #Inicializa un asiento libre en la posicion del arreglo [0][2], que esta libre y pertenece a la sala 1
     #Aunque estos asientos se generan solo cuando uno se vende
 
+    A2=A.Asientos(3,0,0, S1)
+    A3=A.Asientos(4,0,0, S1)
+    A4=A.Asientos(5,0,0, S1)
     V2=V.Venta(None,None)
 
     Cine=Main("Cine-1",100000, None, None, 0)
 
     print(V2.Total) 
     
-    V2.Vender([A1], F1, Cine)
+    V2.Vender([A1,A2], F1, Cine)
+    Cine.Holi(V2)
+    V2.Vender([A3,A4], F1, Cine)
+    Cine.Holi(V2)
+    S1.resumen_sala([A1])
 
     for j in range(75):
         print(Cine.ListaDeVentas[j], end=' ')
 
-    Cine.Holi(V2)
 
     print("\n\n\n")
 
