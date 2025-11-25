@@ -8,16 +8,22 @@ import Ventas as V
 from Ventana import VentanaP
 
 class Main:
-    def __init__(self, Nombre:str, TotalVentasDia:int, ListaDeVentas:V, Salas:S,Cont:int):
+    def __init__(self, Nombre:str, TotalVentasDia:int, ListaDeVentas:V, Salas:S,Cont:int, AsientosVendidos22, Connt:int):
         self.Nombre = Nombre
         self.Salas = [3]
         self.TotalVentasDia = TotalVentasDia
         self.ListaDeVentas = [None] * 75
         self.Cont = 0
+        self.AsientosVendidos22 = [None] * 75
+        self.Connt = 0
 
     def Holi (self, Venta: V.Venta):
         self.ListaDeVentas[self.Cont]=Venta
         self.Cont=self.Cont+1
+
+    def Hole (self, AsientosVendidos22: V.Venta):
+        self.AsientosVendidos22[self.Connt]=AsientosVendidos22
+        self.Connt=self.Connt+1
 
 
 def main():
@@ -60,14 +66,10 @@ if __name__=="__main__":
     A4=A.Asientos(5,0,0, S1)
     V2=V.Venta(None,None)
 
-    Cine=Main("Cine-1",100000, None, None, 0)
-
-    def numeros_sala(self, ListaDeVentas):
-        for venta in ListaDeVentas:
-            if venta is not None:
-                print(ListaDeVentas)
+    Cine=Main("Cine-1",100000, None, None, 0, None, 0)
 
     print(V2.Total) 
+    print(Cine.AsientosVendidos22)
     
     V2.Vender([A1,A2], F1, Cine)
     Cine.Holi(V2)

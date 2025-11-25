@@ -8,6 +8,9 @@ class Venta:
         self.Total = 0
         self.Funcion = None
         AsientosVendidos = []
+        AsientosVendidos2 = []
+        for j in range(len(ListaAsientos)):
+            AsientosVendidos2.append(ListaAsientos)
         for i in range (self.cantidad_boletos):
             for asiento in ListaAsientos:
                 if asiento.Disponible == 1:
@@ -21,7 +24,7 @@ class Venta:
 
         self.Funcion = Funcion.Pelicula
         
-        return AsientosVendidos
+        return AsientosVendidos, AsientosVendidos2
     def __str__(self):
         return f"Venta: {self.Funcion} y {self.Total}"
 #    def GenerarResumen(self):
