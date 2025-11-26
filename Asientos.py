@@ -5,6 +5,9 @@ class Asientos:
         self.Columna = Columna
         self.Disponible = Disponible
         self.Sala = Sala
+    
+    def __str__(self):
+        return f"{self.Columna} y {self.Fila}"
 
 #   def Asientos(self):
 #       Muestra todos los asientos

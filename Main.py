@@ -64,12 +64,11 @@ if __name__=="__main__":
     A2=A.Asientos(3,0,0, S1)
     A3=A.Asientos(4,0,0, S1)
     A4=A.Asientos(5,0,0, S1)
-    V2=V.Venta(None,None)
+    V2=V.Venta(None,None,None)
 
     Cine=Main("Cine-1",100000, None, None, 0, None, 0)
 
     print(V2.Total) 
-    print(Cine.AsientosVendidos22)
     
     V2.Vender([A1,A2], F1, Cine)
     Cine.Holi(V2)
