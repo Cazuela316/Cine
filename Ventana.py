@@ -456,7 +456,6 @@ class ReporteVista(QWidget):
         for sala in self.salas:
             reporte += f"{'ღ'*80}\n\n"
             reporte += f"  Sala {sala.Numero}\n"
-            #reporte += f"{'─' * 80}\n"
             
             total_sala = 0
             entradas_sala = 0
@@ -491,7 +490,6 @@ class ReporteVista(QWidget):
                     total_general += total_funcion
                     reporte += f"{'ღ'*80}\n\n"
                     reporte += f" {funcion.Pelicula}\n"
-                    #reporte += f"{'ღ'*80}\n"
                     reporte += f"   Sala: {sala.Numero}\n"
                     reporte += f"   Horario: {funcion.Horario}\n"
                     reporte += f"   Entradas vendidas: {entradas_vendidas}\n"
@@ -528,7 +526,6 @@ class ReporteVista(QWidget):
         for horario, datos in horarios.items():
             reporte += f"{'ღ' * 80}\n\n"
             reporte += f" {horario.upper()}\n"
-            #reporte += f"{'ღ' * 80}\n"
             
             for func in datos['funciones']:
                 reporte += f"   Sala {func['sala']} - {func['pelicula']}\n"
@@ -567,7 +564,6 @@ class ReporteVista(QWidget):
             reporte += f"Entradas: {entradas_sala} | Total: ${total_sala:,}\n\n"
         reporte += f"{'ღ'*80}\n\n"
         reporte += "Estadisticas generales:\n"
-        #reporte += f"{'ღ'*80}\n\n"
         reporte += f"   Total de entradas vendidas: {total_entradas}\n"
         reporte += f"   Precio por entrada: $3,000\n"
         reporte += f"   Capacidad total del cine: 75 asientos (3 salas)\n\n"
