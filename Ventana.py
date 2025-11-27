@@ -13,7 +13,7 @@ class InicioVista(QWidget):
     def inicializar(self):
         Hola_label = QLabel (self)
         Hola_label.setText("Bienvenido a Cinema")
-        Hola_label.setFont(QFont('Times New Roman', 30))
+        Hola_label.setFont(QFont('Cinzel', 30))
         Hola_label.adjustSize()
         Hola_label.move(520, 15)
         
@@ -23,55 +23,48 @@ class InicioVista(QWidget):
         Admin_button.setGeometry(1330, 10, 100, 35)
         Admin_button.clicked.connect(self.entrar_admin)
 
-        y_pos=150
-        spacing=65
-
         sala1_label = QLabel(self)
         sala1_label.setText("Sala 1")
         sala1_label.setFont(QFont('Times New Roman', 18))
-        sala1_label.setGeometry(100, y_pos, 150, 40)
+        sala1_label.setGeometry(100, 150, 150, 40)
 
-        for i, funcion in enumerate(self.salas[0].Funciones): #
+        for i, funcion in enumerate(self.salas[0].Funciones): 
             if funcion:
                 seleccion_button = QPushButton(self)
                 seleccion_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
                 seleccion_button.setFont(QFont('Times New Roman', 12))
-                seleccion_button.setGeometry(280 + i*350, y_pos, 320, 50)
-                seleccion_button.clicked.connect(lambda checked, s=self.salas[0], iax=i: self.seleccionar_funcion(s,iax)) #
-
-        y_pos+=spacing + 50
+                seleccion_button.setGeometry(280 + i*350, 150, 320, 50)
+                seleccion_button.clicked.connect(lambda checked, s=self.salas[0], iax=i: self.seleccionar_funcion(s,iax)) 
 
         sala2_label = QLabel(self)
         sala2_label.setText("Sala 2")
         sala2_label.setFont(QFont('Times New Roman', 18))
-        sala2_label.setGeometry(100, y_pos, 150, 40)
+        sala2_label.setGeometry(100, 265, 150, 40)
 
         for i, funcion in enumerate(self.salas[1].Funciones):
             if funcion:
                 seleccion2_button = QPushButton(self)
                 seleccion2_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
                 seleccion2_button.setFont(QFont('Times New Roman', 12))
-                seleccion2_button.setGeometry(280 + i*350, y_pos, 320, 50)
+                seleccion2_button.setGeometry(280 + i*350, 265, 320, 50)
                 seleccion2_button.clicked.connect(lambda checked, s=self.salas[1], iax=i: self.seleccionar_funcion(s,iax))
-
-        y_pos+=spacing + 50
 
         sala3_label = QLabel(self)
         sala3_label.setText("Sala 3")
         sala3_label.setFont(QFont('Times New Roman', 18))
-        sala3_label.setGeometry(100, y_pos, 150, 40)
+        sala3_label.setGeometry(100, 380, 150, 40)
 
         for i, funcion in enumerate(self.salas[2].Funciones):
             if funcion:
                 seleccion2_button = QPushButton(self)
                 seleccion2_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
                 seleccion2_button.setFont(QFont('Times New Roman', 12))
-                seleccion2_button.setGeometry(280 + i*350, y_pos, 320, 50)
+                seleccion2_button.setGeometry(280 + i*350, 350, 320, 50)
                 seleccion2_button.clicked.connect(lambda checked, s=self.salas[2], iax=i: self.seleccionar_funcion(s,iax))
 
     def seleccionar_funcion(self, sala, indice):
         ventana_principal = self.window()
-        if isinstance(ventana_principal, VentanaP):   #
+        if isinstance(ventana_principal, VentanaP):   
             ventana_principal.mostrar_asientos(sala, indice)
 
     def entrar_admin(self):
@@ -80,16 +73,16 @@ class InicioVista(QWidget):
             ventana_principal.mostrar_admin()
 
 class AdminVista(QWidget):
-    def __init__(self, parent=None):  #
+    def __init__(self, parent=None):  
         super().__init__(parent)
         self.inicio()
 
     def inicio(self):
         self.titulo_label = QLabel(self)
-        self.titulo_label.setText("Ingrese sus datos de administrador: ")
+        self.titulo_label.setText("Ingrese sus datos de administrador: ")   
         self.titulo_label.setFont(QFont('Times New Roman', 30))
         self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.titulo_label.setGeometry(450, 50, 550, 50)
+        self.titulo_label.setGeometry(450, 50, 570, 50)
 
         usuario_label = QLabel(self)
         usuario_label.setText("Usuario:")
@@ -106,7 +99,7 @@ class AdminVista(QWidget):
         contra_label.setGeometry(500, 270, 120, 30)
 
         self.contra_input = QLineEdit(self)
-        self.contra_input.setEchoMode(QLineEdit.EchoMode.Password)   #
+        self.contra_input.setEchoMode(QLineEdit.EchoMode.Password)   
         self.contra_input.setFont(QFont('Times New Roman', 12))
         self.contra_input.setGeometry(620, 265, 280, 40)
 
@@ -127,7 +120,6 @@ class AdminVista(QWidget):
         contra = self.contra_input.text()
 
         if usuario == "admin" and contra == "1234":
-            QMessageBox.information(self, "Exito", "Bienvenido al inicio como Administrador")
             ventana_principal = self.window()
             if isinstance(ventana_principal, VentanaP):
                 ventana_principal.mostrar_menu_admin()
@@ -147,7 +139,7 @@ class AdminVista(QWidget):
 class AsientosVista(QWidget):
     def __init__(self, parent = None):
         super().__init__(parent)
-        self.sala_actual = None  #es como null, para que no tenga nada
+        self.sala_actual = None  
         self.funcion_actual = None
         self.indice_funcion = None
         self.asientosSeleccionados = []
@@ -167,54 +159,46 @@ class AsientosVista(QWidget):
         self.info_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.info_label.setGeometry(400, 80, 650, 30)
 
-        leyenda_y = 120
-
         disponible_label = QLabel(self)
         disponible_label.setText(" _ = Disponible")
         disponible_label.setFont(QFont('Courier New', 14))
-        disponible_label.setGeometry(650, leyenda_y, 200, 30)
+        disponible_label.setGeometry(1050, 280, 200, 30)
 
         ocupado_label = QLabel(self)
         ocupado_label.setText(" x = Ocupado")
         ocupado_label.setFont(QFont('Courier New', 14))
-        ocupado_label.setGeometry(850, leyenda_y, 200, 30)
+        ocupado_label.setGeometry(1050, 360, 200, 30)
 
         seleccionado_label = QLabel(self)
         seleccionado_label.setText(" o = Seleccionado")
         seleccionado_label.setFont(QFont('Courier New', 14))
-        seleccionado_label.setGeometry(1050, leyenda_y, 200, 30)
-
-        Lax = 550
-        Lay = 170
-        size_button = 70
-        spacing = 5
+        seleccionado_label.setGeometry(1050, 320, 200, 30)
 
         for j in range(5):
             columna_label = QLabel(str(j+1), self)
             columna_label.setFont(QFont('Courier New', 14))
             columna_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            x_posicion = Lax + j*(size_button + spacing)
-            columna_label.setGeometry(x_posicion, Lay, size_button, 30)
+            x_posicion = 550 + j*(70 + 5)
+            columna_label.setGeometry(x_posicion, 170, 70, 30)
         
         filas = ['A', 'B', 'C', 'D', 'E']
-        Lay2 = 210
 
         for i in range(5):
             fila_botones = []
             fila_label = QLabel(self)
             fila_label.setText(filas[i])
             fila_label.setFont(QFont('Courier New', 16))
-            x_posicion = Lax - 40
-            y_posicion = Lay2 + i*(size_button + spacing)
-            fila_label.setGeometry(x_posicion, y_posicion, 30, size_button)
+            x_posicion = 550 - 40
+            y_posicion = 210 + i*(70 + 5)
+            fila_label.setGeometry(x_posicion, y_posicion, 30, 70)
 
             for j in range(5):
                 Matriz_button = QPushButton(self)
                 Matriz_button.setText("_")
                 Matriz_button.setFont(QFont('Courier New', 24))
-                x_posicion = Lax + j*(size_button + spacing)
-                y_posicion = Lay2 + i*(size_button + spacing)
-                Matriz_button.setGeometry(x_posicion, y_posicion, size_button, size_button)
+                x_posicion = 550 + j*(70 + 5)
+                y_posicion = 210 + i*(70 + 5)
+                Matriz_button.setGeometry(x_posicion, y_posicion, 70, 70)
                 Matriz_button.clicked.connect(lambda checked, f=i, c=j: self.toggle_asiento(f,c))
                 fila_botones.append(Matriz_button)   #
             self.botonesAsientos.append(fila_botones)
@@ -228,13 +212,13 @@ class AsientosVista(QWidget):
         volver_button = QPushButton(self)
         volver_button.setText("Volver a las funciones")
         volver_button.setFont(QFont('Times New Roman', 12))
-        volver_button.setGeometry(530, 660, 200, 50)
+        volver_button.setGeometry(20, 20, 200, 50)
         volver_button.clicked.connect(self.volver_funciones)
         
         confirmar_button = QPushButton(self)
         confirmar_button.setText("Confirmar Compra")
         confirmar_button.setFont(QFont('Times New Roman', 12))
-        confirmar_button.setGeometry(750, 660, 200, 50)
+        confirmar_button.setGeometry(625, 660, 200, 50)
         confirmar_button.clicked.connect(self.confirmar_compra)
     
     def set_funcion(self, sala, funcion, indice_funcion, main_objeto):
@@ -267,7 +251,7 @@ class AsientosVista(QWidget):
             QMessageBox.warning(self, "Asiento Ocupado", "Este asiento esta ocupado. Porfavor eliga otro")
             return
         
-        asiento_coord = (fila, columna)  #
+        asiento_coord = (fila, columna) 
         if asiento_coord in self.asientosSeleccionados:
             self.asientosSeleccionados.remove(asiento_coord)
             Boton.setText("_")
@@ -282,7 +266,7 @@ class AsientosVista(QWidget):
         self.total_label.setText(f"Total: ${total}")
 
     def confirmar_compra(self):
-        if len(self.asientosSeleccionados) == 0:  #
+        if len(self.asientosSeleccionados) == 0:  
             QMessageBox.warning(self, "Error", "Porfavor seleccione asientos")
             return
         
@@ -302,9 +286,7 @@ class AsientosVista(QWidget):
         venta.Total = total
         venta.Funcion = self.funcion_actual
         venta.asientos = lista_asientos
-
         self.funcion_actual.EntradasVendidas+= len(self.asientosSeleccionados)
-
         self.main_objeto.Holi(venta)
         self.main_objeto.TotalVentasDia += total
 
@@ -324,12 +306,12 @@ class ResumenVista(QWidget):
 
     def inicializar(self):
         titulo_label = QLabel(self)
-        titulo_label.setText("Ha logrado comprar boletos")
+        titulo_label.setText("Boletos comprados")
         titulo_label.setFont(QFont('Times New Roman', 35))
         titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         titulo_label.setGeometry(400, 30, 650, 60)
 
-        self.resumen_text = QTextEdit(self)  #
+        self.resumen_text = QTextEdit(self) 
         self.resumen_text.setReadOnly(True)
         self.resumen_text.setFont(QFont('Times New Roman', 14))
         self.resumen_text.setGeometry(300, 120, 850, 450)
@@ -342,20 +324,19 @@ class ResumenVista(QWidget):
     
     def mostrar_resumen(self, venta, sala):
         filas = ['A', 'B', 'C', 'D', 'E']
-        resumen = "="*60+"\n"
-        resumen+= "     Resumen\n"
-        resumen+= "="*60 + "\n\n"
-        resumen+= f"Sala: {sala.Numero}\n"
-        resumen+= f"Pelicula: {venta.Funcion.Pelicula}\n"
-        resumen+= f"Horario: {venta.Funcion.Horario}\n"
-        resumen+= f"Cantidad de entradas: {len(venta.asientos)}\n"
-        resumen+= f"Precio por entrada: $3000\n\n"
-        resumen+= f"Asientos comprados: \n"
+        resumen = "ღ"*124+"\n\n"
+        resumen+= "Resumen\n"
+        resumen+= f"    Sala: {sala.Numero}\n"
+        resumen+= f"    Pelicula: {venta.Funcion.Pelicula}\n"
+        resumen+= f"    Horario: {venta.Funcion.Horario}\n"
+        resumen+= f"    Cantidad de entradas: {len(venta.asientos)}\n"
+        resumen+= f"    Precio por entrada: $3000\n"
+        resumen+= f"    Asientos comprados: "
         for asiento in venta.asientos:
-            resumen += f"{filas[asiento.Fila]}{asiento.Columna+1}\n"
-        resumen += "="*60+"\n"
-        resumen += f"Total: ${venta.Total}\n"
-        resumen += "="*60+"\n"
+            resumen += f" {filas[asiento.Fila]}{asiento.Columna+1}\n\n"
+        resumen += "ღ"*62+"\n\n"
+        resumen += f"Total: ${venta.Total}\n\n\n"
+        resumen += "ღ"*124+"\n"
 
         self.resumen_text.setPlainText(resumen)
 
@@ -371,48 +352,45 @@ class MenuAdminVista(QWidget):
 
     def inicializar(self):
         titulo_label = QLabel(self)
-        titulo_label.setText("Panel de Administración")
+        titulo_label.setText("Has entrado como Administrador")
         titulo_label.setFont(QFont('Times New Roman', 35))
         titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         titulo_label.setGeometry(400, 50, 650, 60)
 
         subtitulo_label = QLabel(self)
-        subtitulo_label.setText("Selecciona el tipo de reporte que deseas ver:")
+        subtitulo_label.setText("Eliga el resumen que quiera ver: ")
         subtitulo_label.setFont(QFont('Times New Roman', 16))
         subtitulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         subtitulo_label.setGeometry(400, 130, 650, 40)
 
-        y_pos = 210
-        spacing = 80
-
         sala_button = QPushButton(self)
         sala_button.setText("Resumen de Ventas por Sala")
         sala_button.setFont(QFont('Times New Roman', 14))
-        sala_button.setGeometry(525, y_pos, 400, 60)
+        sala_button.setGeometry(525, 210, 400, 60)
         sala_button.clicked.connect(lambda: self.ver_reporte('sala'))
 
         funcion_button = QPushButton(self)
         funcion_button.setText("Resumen de Ventas por Función")
         funcion_button.setFont(QFont('Times New Roman', 14))
-        funcion_button.setGeometry(525, y_pos + spacing, 400, 60)
+        funcion_button.setGeometry(525, 210 + 80, 400, 60)
         funcion_button.clicked.connect(lambda: self.ver_reporte('funcion'))
 
         horario_button = QPushButton(self)
         horario_button.setText("Resumen de Ventas por Horario")
         horario_button.setFont(QFont('Times New Roman', 14))
-        horario_button.setGeometry(525, y_pos + spacing*2, 400, 60)
+        horario_button.setGeometry(525, 210 + 80*2, 400, 60)
         horario_button.clicked.connect(lambda: self.ver_reporte('horario'))
 
         general_button = QPushButton(self)
         general_button.setText("Resumen General del Dia")
         general_button.setFont(QFont('Times New Roman', 14))
-        general_button.setGeometry(525, y_pos + spacing*3, 400, 60)
+        general_button.setGeometry(525, 210 + 80*3, 400, 60)
         general_button.clicked.connect(lambda: self.ver_reporte('general'))
 
         cerrar_button = QPushButton(self)
         cerrar_button.setText("Cerrar Sesion")
         cerrar_button.setFont(QFont('Times New Roman', 12))
-        cerrar_button.setGeometry(625, 620, 200, 50)
+        cerrar_button.setGeometry(20, 20, 200, 50)
         cerrar_button.clicked.connect(self.cerrar_sesion)
 
     def ver_reporte(self, tipo_reporte):
@@ -434,7 +412,7 @@ class ReporteVista(QWidget):
 
     def inicializar(self):
         self.titulo_label = QLabel(self)
-        self.titulo_label.setText("Reportes de Ventas")
+        self.titulo_label.setText("Resumenes de Ventas")
         self.titulo_label.setFont(QFont('Times New Roman', 30))
         self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.titulo_label.setGeometry(400, 30, 650, 60)
@@ -447,7 +425,7 @@ class ReporteVista(QWidget):
         volver_button = QPushButton(self)
         volver_button.setText("Volver al Menú de Administración")
         volver_button.setFont(QFont('Times New Roman', 12))
-        volver_button.setGeometry(575, 660, 300, 50)
+        volver_button.setGeometry(20, 20, 300, 50)
         volver_button.clicked.connect(self.volver_menu_admin)
 
     def set_datos(self, main_objeto, salas):
@@ -471,14 +449,14 @@ class ReporteVista(QWidget):
         self.reporte_text.setPlainText(reporte)
 
     def reporte_por_sala(self):
-        reporte = "=" * 80 + "\n"
+        reporte = "="*80+"\n"
         reporte += "     Resumen de venta por sala\n"
-        reporte += "=" * 80 + "\n\n"
+        reporte += "="*80+"\n\n"
         
         for sala in self.salas:
-            reporte += f"{'─' * 80}\n"
+            reporte += f"{'ღ'*80}\n\n"
             reporte += f"  Sala {sala.Numero}\n"
-            reporte += f"{'─' * 80}\n"
+            #reporte += f"{'─' * 80}\n"
             
             total_sala = 0
             entradas_sala = 0
@@ -489,20 +467,20 @@ class ReporteVista(QWidget):
                     total_funcion = entradas_vendidas * 3000
                     total_sala += total_funcion
                     entradas_sala += entradas_vendidas
-                    reporte += f"{funcion.Pelicula} ({funcion.Horario})\n"
-                    reporte += f"Entradas vendidas: {entradas_vendidas}\n"
-                    reporte += f" Recaudación: ${total_funcion:,}\n\n"
-            reporte += f"  {'─' * 76}\n"
+                    reporte += f"       {funcion.Pelicula} ({funcion.Horario})\n"
+                    reporte += f"           Entradas vendidas: {entradas_vendidas}\n"
+                    reporte += f"           Total: ${total_funcion:,}\n\n"
+            reporte += f"{'ღ'*80}\n\n"
             reporte += f"Total sala {sala.Numero}:\n"
             reporte += f"Entradas vendidas: {entradas_sala}\n"
-            reporte += f"Total: ${total_sala:,}\n"
-            reporte += f"  {'─' * 76}\n\n"
+            reporte += f"Total: ${total_sala:,}\n\n"
+            reporte += f"{'ღ' * 76}\n\n"
         return reporte
 
     def reporte_por_funcion(self):
-        reporte = "=" * 80 + "\n"
+        reporte = "="*80+"\n"
         reporte += "  Resumen de venta por funcion\n"
-        reporte += "=" * 80 + "\n\n"
+        reporte += "="*80+"\n\n"
         total_general = 0
         
         for sala in self.salas:
@@ -511,22 +489,22 @@ class ReporteVista(QWidget):
                     entradas_vendidas = funcion.EntradasVendidas
                     total_funcion = entradas_vendidas * 3000
                     total_general += total_funcion
-                    reporte += f"{'─' * 80}\n"
+                    reporte += f"{'ღ'*80}\n\n"
                     reporte += f" {funcion.Pelicula}\n"
-                    reporte += f"{'─' * 80}\n"
-                    reporte += f"Sala: {sala.Numero}\n"
-                    reporte += f"Horario: {funcion.Horario}\n"
-                    reporte += f"Entradas vendidas: {entradas_vendidas}\n"
-                    reporte += f"Total: ${total_funcion:,}\n\n"
-        reporte += f"{'═' * 80}\n"
-        reporte += f"Total general: ${total_general:,}\n"
-        reporte += f"{'═' * 80}\n"
+                    #reporte += f"{'ღ'*80}\n"
+                    reporte += f"   Sala: {sala.Numero}\n"
+                    reporte += f"   Horario: {funcion.Horario}\n"
+                    reporte += f"   Entradas vendidas: {entradas_vendidas}\n"
+                    reporte += f"   Total: ${total_funcion:,}\n\n"
+        reporte += f"{'ღ'*80}\n\n"
+        reporte += f"Total general: ${total_general:,}\n\n"
+        reporte += f"{'ღ'*80}\n"
         return reporte
 
     def reporte_por_horario(self):
-        reporte = "=" * 80 + "\n"
+        reporte = "="*80+"\n"
         reporte += "  Resumen de venta por horario\n"
-        reporte += "=" * 80 + "\n\n"
+        reporte += "="*80+"\n\n"
         horarios = {}
         
         for sala in self.salas:
@@ -548,30 +526,30 @@ class ReporteVista(QWidget):
         total_general = 0
         
         for horario, datos in horarios.items():
-            reporte += f"{'─' * 80}\n"
+            reporte += f"{'ღ' * 80}\n\n"
             reporte += f" {horario.upper()}\n"
-            reporte += f"{'─' * 80}\n"
+            #reporte += f"{'ღ' * 80}\n"
             
             for func in datos['funciones']:
-                reporte += f" Sala {func['sala']} - {func['pelicula']}\n"
-                reporte += f"Entradas: {func['entradas']} | Total: ${func['total']:,}\n"
-            reporte += f"\n  Total {horario}:\n"
-            reporte += f"Entradas vendidas: {datos['entradas']}\n"
-            reporte += f"Total: ${datos['total']:,}\n\n"
+                reporte += f"   Sala {func['sala']} - {func['pelicula']}\n"
+                reporte += f"       Entradas: {func['entradas']} | Total: ${func['total']:,}\n\n"
+            reporte += f"Total {horario}:\n"
+            reporte += f"   Entradas vendidas: {datos['entradas']}\n"
+            reporte += f"   Total: ${datos['total']:,}\n\n"
             total_general += datos['total']
-        reporte += f"{'═' * 80}\n"
-        reporte += f"Total general: ${total_general:,}\n"
-        reporte += f"{'═' * 80}\n"
+        reporte += f"{'ღ'*80}\n\n"
+        reporte += f"Total general: ${total_general:,}\n\n"
+        reporte += f"{'ღ'*80}\n"
         return reporte
 
     def reporte_general(self):
-        reporte = "=" * 80 + "\n"
+        reporte = "="*80+"\n"
         reporte += "  Resumen general del dia\n"
-        reporte += "=" * 80 + "\n\n"
+        reporte += "="*80+"\n\n"
         total_entradas = 0
         total_recaudacion = 0
         reporte += "  Detalle por sala:\n"
-        reporte += f"  {'─' * 76}\n\n"
+        reporte += f"{'ღ' * 80}\n\n"
         
         for sala in self.salas:
             total_sala = 0
@@ -587,20 +565,19 @@ class ReporteVista(QWidget):
             total_recaudacion += total_sala
             reporte += f"Sala {sala.Numero}:\n"
             reporte += f"Entradas: {entradas_sala} | Total: ${total_sala:,}\n\n"
-        reporte += f"  {'─' * 76}\n\n"
+        reporte += f"{'ღ'*80}\n\n"
         reporte += "Estadisticas generales:\n"
-        reporte += f"  {'─' * 76}\n"
-        reporte += f"Total de entradas vendidas: {total_entradas}\n"
-        reporte += f"Precio por entrada: $3,000\n"
-        reporte += f"Capacidad total del cine: 75 asientos (3 salas)\n"
-        
+        #reporte += f"{'ღ'*80}\n\n"
+        reporte += f"   Total de entradas vendidas: {total_entradas}\n"
+        reporte += f"   Precio por entrada: $3,000\n"
+        reporte += f"   Capacidad total del cine: 75 asientos (3 salas)\n\n"
+        reporte += f"  {'ღ'*80}\n\n"
+
         if total_entradas > 0:
             ocupacion = (total_entradas / 75) * 100
             reporte += f"Ocupación del día: {ocupacion:.1f}%\n"
-        reporte += f"\n  {'─' * 76}\n"
-        reporte += f"  {'═' * 76}\n"
-        reporte += f"Total del dia: ${total_recaudacion:,}\n"
-        reporte += f"  {'═' * 76}\n"
+        reporte += f"Total del dia: ${total_recaudacion:,}\n\n"
+        reporte += f"  {'ღ'*80}\n"
         return reporte
 
     def volver_menu_admin(self):
