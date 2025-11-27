@@ -27,12 +27,6 @@ class Main:
 
 
 def main():
-    app = QApplication(sys.argv)
-    ventana = VentanaP()
-    ventana.show()
-    sys.exit(app.exec())
-
-if __name__=="__main__":
     F1=F.Funcion("Matiné", "Peli1", 0)
     F2=F.Funcion("Vermut", "Peli2", 0)
     F3=F.Funcion("Vespertina", "Peli3", 0)
@@ -58,32 +52,43 @@ if __name__=="__main__":
     S3.Funciones[1]=F8
     S3.Funciones[2]=F9
 
-    A1=A.Asientos(2,0,0, S1) #Inicializa un asiento libre en la posicion del arreglo [0][2], que esta libre y pertenece a la sala 1
+    Cine=Main("Cine-1",100000, None, None, 0, None, 0)
+    Cine.Salas = [S1, S2, S3]
+    
+    app = QApplication(sys.argv)
+    ventana = VentanaP(Cine, [S1, S2, S3])
+    ventana.show()
+    sys.exit(app.exec())
+
+if __name__=="__main__":
+    main()
+
+    #A1=A.Asientos(2,0,0, S1) #Inicializa un asiento libre en la posicion del arreglo [0][2], que esta libre y pertenece a la sala 1
     #Aunque estos asientos se generan solo cuando uno se vende
 
-    A2=A.Asientos(3,0,0, S1)
-    A3=A.Asientos(4,0,0, S1)
-    A4=A.Asientos(5,0,0, S1)
-    V2=V.Venta(None,None,None)
+    #A2=A.Asientos(3,0,0, S1)
+    #A3=A.Asientos(4,0,0, S1)
+    #A4=A.Asientos(5,0,0, S1)
+    #V2=V.Venta(None,None,None)
 
-    Cine=Main("Cine-1",100000, None, None, 0, None, 0)
+    #Cine=Main("Cine-1",100000, None, None, 0, None, 0)
 
-    print(V2.Total) 
+    #print(V2.Total) 
     
-    V2.Vender([A1,A2], F1, Cine)
-    Cine.Holi(V2)
-    V2.Vender([A3,A4], F1, Cine)
-    Cine.Holi(V2)
-    Total_sala=S1.resumen_sala(Cine.ListaDeVentas)
-    print(Total_sala)
+    #V2.Vender([A1,A2], F1, Cine)
+    #Cine.Holi(V2)
+    #V2.Vender([A3,A4], F1, Cine)
+    #Cine.Holi(V2)
+    #Total_sala=S1.resumen_sala(Cine.ListaDeVentas)
+    #print(Total_sala)
 
-    for j in range(75):
-        print(Cine.ListaDeVentas[j], end=' ')
+    #for j in range(75):
+    #    print(Cine.ListaDeVentas[j], end=' ')
 
 
-    print("\n\n\n")
+    #print("\n\n\n")
 
-    for j in range(75):
-        print(Cine.ListaDeVentas[j], end=' ')
+    #for j in range(75):
+    #    print(Cine.ListaDeVentas[j], end=' ')
 
-    print(A1.Disponible, "   ", V2.Total)
+    #print(A1.Disponible, "   ", V2.Total)

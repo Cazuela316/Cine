@@ -1,47 +1,78 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton, QVBoxLayout, QBoxLayout, QLineEdit, QMessageBox, QCheckBox, QStackedWidget
+from PyQt6.QtWidgets import QMainWindow, QWidget, QLabel, QPushButton, QLineEdit, QMessageBox, QStackedWidget, QTextEdit
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont, QPixmap
+from PyQt6.QtGui import QFont
+import Asientos as A
 
-class Inicio(QWidget):
-    def __init__(self, parent = None):
+class InicioVista(QWidget):
+    def __init__(self, salas, parent = None):
         super().__init__(parent)
+        self.salas = salas
         self.inicializar()
 
     def inicializar(self):
-
         Hola_label = QLabel (self)
         Hola_label.setText("Bienvenido a Cinema")
         Hola_label.setFont(QFont('Times New Roman', 30))
         Hola_label.adjustSize()
         Hola_label.move(520, 15)
         
-        inicio_label = QLabel(self)
-        inicio_label.setText("Iniciar sesion como: ")
-        inicio_label.setFont(QFont('Times New Roman', 15))
-        inicio_label.adjustSize()
-        inicio_label.move(650, 200)
-
-        Cliente_button = QPushButton(self)
-        Cliente_button.setText('Cliente')
-        Cliente_button.setFont(QFont('Times New Roman', 10))
-        Cliente_button.adjustSize()
-        Cliente_button.resize(200, 50)
-        Cliente_button.move(630, 220)
-        Cliente_button.clicked.connect(self.entrar_cliente)
-
         Admin_button = QPushButton(self)
         Admin_button.setText('Administrador')
         Admin_button.setFont(QFont('Times New Roman', 10))
-        Admin_button.adjustSize()
-        Admin_button.resize(200, 50)
-        Admin_button.move(630, 280)
+        Admin_button.setGeometry(1330, 10, 100, 35)
         Admin_button.clicked.connect(self.entrar_admin)
 
-    def entrar_cliente(self):
+        y_pos=150
+        spacing=65
+
+        sala1_label = QLabel(self)
+        sala1_label.setText("Sala 1")
+        sala1_label.setFont(QFont('Times New Roman', 18))
+        sala1_label.setGeometry(100, y_pos, 150, 40)
+
+        for i, funcion in enumerate(self.salas[0].Funciones): #
+            if funcion:
+                seleccion_button = QPushButton(self)
+                seleccion_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
+                seleccion_button.setFont(QFont('Times New Roman', 12))
+                seleccion_button.setGeometry(280 + i*350, y_pos, 320, 50)
+                seleccion_button.clicked.connect(lambda checked, s=self.salas[0], iax=i: self.seleccionar_funcion(s,iax)) #
+
+        y_pos+=spacing + 50
+
+        sala2_label = QLabel(self)
+        sala2_label.setText("Sala 2")
+        sala2_label.setFont(QFont('Times New Roman', 18))
+        sala2_label.setGeometry(100, y_pos, 150, 40)
+
+        for i, funcion in enumerate(self.salas[1].Funciones):
+            if funcion:
+                seleccion2_button = QPushButton(self)
+                seleccion2_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
+                seleccion2_button.setFont(QFont('Times New Roman', 12))
+                seleccion2_button.setGeometry(280 + i*350, y_pos, 320, 50)
+                seleccion2_button.clicked.connect(lambda checked, s=self.salas[1], iax=i: self.seleccionar_funcion(s,iax))
+
+        y_pos+=spacing + 50
+
+        sala3_label = QLabel(self)
+        sala3_label.setText("Sala 3")
+        sala3_label.setFont(QFont('Times New Roman', 18))
+        sala3_label.setGeometry(100, y_pos, 150, 40)
+
+        for i, funcion in enumerate(self.salas[2].Funciones):
+            if funcion:
+                seleccion2_button = QPushButton(self)
+                seleccion2_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
+                seleccion2_button.setFont(QFont('Times New Roman', 12))
+                seleccion2_button.setGeometry(280 + i*350, y_pos, 320, 50)
+                seleccion2_button.clicked.connect(lambda checked, s=self.salas[2], iax=i: self.seleccionar_funcion(s,iax))
+
+    def seleccionar_funcion(self, sala, indice):
         ventana_principal = self.window()
-        if isinstance(ventana_principal, VentanaP):
-            ventana_principal.mostrar_salas()   
+        if isinstance(ventana_principal, VentanaP):   #
+            ventana_principal.mostrar_asientos(sala, indice)
 
     def entrar_admin(self):
         ventana_principal = self.window()
@@ -49,52 +80,46 @@ class Inicio(QWidget):
             ventana_principal.mostrar_admin()
 
 class AdminVista(QWidget):
-    
-    def __init__(self, parent=None):
+    def __init__(self, parent=None):  #
         super().__init__(parent)
         self.inicio()
 
     def inicio(self):
         self.titulo_label = QLabel(self)
-        self.titulo_label.setText("Ha entrado como Administrador ")
+        self.titulo_label.setText("Ingrese sus datos de administrador: ")
         self.titulo_label.setFont(QFont('Times New Roman', 30))
-        self.titulo_label.adjustSize()
-        self.titulo_label.move(500, 20)
+        self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.titulo_label.setGeometry(450, 50, 550, 50)
 
         usuario_label = QLabel(self)
         usuario_label.setText("Usuario:")
         usuario_label.setFont(QFont('Times New Roman', 15))
-        usuario_label.adjustSize()
-        usuario_label.move(100, 250)
+        usuario_label.setGeometry(500, 200, 100, 30)
 
         self.usuario_input = QLineEdit(self)
-        self.usuario_input.resize(250, 40)
-        self.usuario_input.move(180, 240)
+        self.usuario_input.setFont(QFont('Times New Roman', 12))
+        self.usuario_input.setGeometry(600, 195, 300, 40)
 
         contra_label = QLabel(self)
         contra_label.setText("Contraseña:")
         contra_label.setFont(QFont('Times New Roman', 15))
-        contra_label.adjustSize()
-        contra_label.move(100, 350)
+        contra_label.setGeometry(500, 270, 120, 30)
 
         self.contra_input = QLineEdit(self)
-        self.contra_input.resize(250, 40)
-        self.contra_input.move(200, 340)
+        self.contra_input.setEchoMode(QLineEdit.EchoMode.Password)   #
+        self.contra_input.setFont(QFont('Times New Roman', 12))
+        self.contra_input.setGeometry(620, 265, 280, 40)
 
         ingresar_button = QPushButton(self)
         ingresar_button.setText('Ingresar')
         ingresar_button.setFont(QFont('Times New Roman', 12))
-        ingresar_button.adjustSize()
-        ingresar_button.resize(200, 50)
-        ingresar_button.move(140, 450)
+        ingresar_button.setGeometry(600, 340, 200, 50)
         ingresar_button.clicked.connect(self.validar_inicio)
 
         volver_button = QPushButton(self)
         volver_button.setText('Volver al inicio')
         volver_button.setFont(QFont('Times New Roman', 12))
-        volver_button.adjustSize()
-        volver_button.resize(200, 50)
-        volver_button.move (10,15)
+        volver_button.setGeometry(20, 20, 120, 40)
         volver_button.clicked.connect(self.volver_inicio)
 
     def validar_inicio(self):
@@ -102,174 +127,538 @@ class AdminVista(QWidget):
         contra = self.contra_input.text()
 
         if usuario == "admin" and contra == "1234":
-            QMessageBox.information(self, "Bienvenido al inicio como Administrador")
-            #cambio vista
+            QMessageBox.information(self, "Exito", "Bienvenido al inicio como Administrador")
+            ventana_principal = self.window()
+            if isinstance(ventana_principal, VentanaP):
+                ventana_principal.mostrar_menu_admin()
         elif usuario == "" or contra == "":
             QMessageBox.warning(self, "Error", "Faltan datos")
         else:
             QMessageBox.warning(self, "Error", "Usuario o contraseña incorrectos")
 
     def volver_inicio(self):
+        self.usuario_input.clear()
+        self.contra_input.clear()
+
         ventana_principal = self.window()
         if isinstance(ventana_principal, VentanaP):
             ventana_principal.mostrar_inicio()
+        
+class AsientosVista(QWidget):
+    def __init__(self, parent = None):
+        super().__init__(parent)
+        self.sala_actual = None  #es como null, para que no tenga nada
+        self.funcion_actual = None
+        self.indice_funcion = None
+        self.asientosSeleccionados = []
+        self.botonesAsientos = []
+        self.inicializar()
 
-class SalasVista(QWidget):
+    def inicializar(self):
+        self.titulo_label = QLabel(self)
+        self.titulo_label.setText("Eliga sus asientos")
+        self.titulo_label.setFont(QFont('Times New Roman', 30))
+        self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.titulo_label.setGeometry(400, 20, 650, 50)
+
+        self.info_label = QLabel(self)
+        self.info_label.setText("")
+        self.info_label.setFont(QFont('Times New Roman', 22))
+        self.info_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.info_label.setGeometry(400, 80, 650, 30)
+
+        leyenda_y = 120
+
+        disponible_label = QLabel(self)
+        disponible_label.setText(" _ = Disponible")
+        disponible_label.setFont(QFont('Courier New', 14))
+        disponible_label.setGeometry(650, leyenda_y, 200, 30)
+
+        ocupado_label = QLabel(self)
+        ocupado_label.setText(" x = Ocupado")
+        ocupado_label.setFont(QFont('Courier New', 14))
+        ocupado_label.setGeometry(850, leyenda_y, 200, 30)
+
+        seleccionado_label = QLabel(self)
+        seleccionado_label.setText(" o = Seleccionado")
+        seleccionado_label.setFont(QFont('Courier New', 14))
+        seleccionado_label.setGeometry(1050, leyenda_y, 200, 30)
+
+        Lax = 550
+        Lay = 170
+        size_button = 70
+        spacing = 5
+
+        for j in range(5):
+            columna_label = QLabel(str(j+1), self)
+            columna_label.setFont(QFont('Courier New', 14))
+            columna_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            x_posicion = Lax + j*(size_button + spacing)
+            columna_label.setGeometry(x_posicion, Lay, size_button, 30)
+        
+        filas = ['A', 'B', 'C', 'D', 'E']
+        Lay2 = 210
+
+        for i in range(5):
+            fila_botones = []
+            fila_label = QLabel(self)
+            fila_label.setText(filas[i])
+            fila_label.setFont(QFont('Courier New', 16))
+            x_posicion = Lax - 40
+            y_posicion = Lay2 + i*(size_button + spacing)
+            fila_label.setGeometry(x_posicion, y_posicion, 30, size_button)
+
+            for j in range(5):
+                Matriz_button = QPushButton(self)
+                Matriz_button.setText("_")
+                Matriz_button.setFont(QFont('Courier New', 24))
+                x_posicion = Lax + j*(size_button + spacing)
+                y_posicion = Lay2 + i*(size_button + spacing)
+                Matriz_button.setGeometry(x_posicion, y_posicion, size_button, size_button)
+                Matriz_button.clicked.connect(lambda checked, f=i, c=j: self.toggle_asiento(f,c))
+                fila_botones.append(Matriz_button)   #
+            self.botonesAsientos.append(fila_botones)
+
+        self.total_label = QLabel(self)
+        self.total_label.setText("Total: $0")
+        self.total_label.setFont(QFont('Times New Roman', 18))
+        self.total_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.total_label.setGeometry(550, 610, 350, 40)
+
+        volver_button = QPushButton(self)
+        volver_button.setText("Volver a las funciones")
+        volver_button.setFont(QFont('Times New Roman', 12))
+        volver_button.setGeometry(530, 660, 200, 50)
+        volver_button.clicked.connect(self.volver_funciones)
+        
+        confirmar_button = QPushButton(self)
+        confirmar_button.setText("Confirmar Compra")
+        confirmar_button.setFont(QFont('Times New Roman', 12))
+        confirmar_button.setGeometry(750, 660, 200, 50)
+        confirmar_button.clicked.connect(self.confirmar_compra)
+    
+    def set_funcion(self, sala, funcion, indice_funcion, main_objeto):
+        self.sala_actual=sala
+        self.funcion_actual=funcion
+        self.indice_funcion=indice_funcion
+        self.main_objeto = main_objeto
+        self.asientosSeleccionados = []
+
+        self.info_label.setText(f"Sala {sala.Numero} - {funcion.Pelicula} ({funcion.Horario})")
+        self.actualizar_asientos()
+        self.actualizar_total()
+
+    def actualizar_asientos(self):
+        for i in range(5):
+            for j in range(5):
+                Matriz_button = self.botonesAsientos[i][j]
+                estado = self.funcion_actual.Asientos[i][j]
+                
+                if estado == 1:
+                    Matriz_button.setText("x")
+                else:
+                    Matriz_button.setText("_")
+    
+    def toggle_asiento(self, fila, columna):
+        Boton = self.botonesAsientos[fila][columna]
+        estado = self.funcion_actual.Asientos[fila][columna]
+
+        if estado == 1:
+            QMessageBox.warning(self, "Asiento Ocupado", "Este asiento esta ocupado. Porfavor eliga otro")
+            return
+        
+        asiento_coord = (fila, columna)  #
+        if asiento_coord in self.asientosSeleccionados:
+            self.asientosSeleccionados.remove(asiento_coord)
+            Boton.setText("_")
+        else:
+            self.asientosSeleccionados.append(asiento_coord)
+            Boton.setText("o")
+
+        self.actualizar_total()
+
+    def actualizar_total(self):
+        total = len(self.asientosSeleccionados)*3000
+        self.total_label.setText(f"Total: ${total}")
+
+    def confirmar_compra(self):
+        if len(self.asientosSeleccionados) == 0:  #
+            QMessageBox.warning(self, "Error", "Porfavor seleccione asientos")
+            return
+        
+        import Ventas as V
+        lista_asientos = []
+        for fila, columna in self.asientosSeleccionados:
+            asiento = A.Asientos(fila, columna, 0, self.sala_actual)
+            lista_asientos.append(asiento)
+
+        venta = V.Venta(None, None, None)
+        venta.cantidad_boletos = len(self.asientosSeleccionados)
+
+        for fila, columna in self.asientosSeleccionados:
+            self.funcion_actual.Asientos[fila][columna] = 1
+
+        total = len(self.asientosSeleccionados)*3000
+        venta.Total = total
+        venta.Funcion = self.funcion_actual
+        venta.asientos = lista_asientos
+
+        self.funcion_actual.EntradasVendidas+= len(self.asientosSeleccionados)
+
+        self.main_objeto.Holi(venta)
+        self.main_objeto.TotalVentasDia += total
+
+        ventana_principal = self.window()
+        if hasattr(ventana_principal, 'mostrar_resumen'):
+            ventana_principal.mostrar_resumen(venta, self.sala_actual)
+
+    def volver_funciones(self):
+        ventana_principal = self.window()
+        if hasattr(ventana_principal, 'mostrar_inicio'):
+            ventana_principal.mostrar_inicio()
+
+class ResumenVista(QWidget):
     def __init__(self, parent = None):
         super().__init__(parent)
         self.inicializar()
 
     def inicializar(self):
         titulo_label = QLabel(self)
-        titulo_label.setText("Selecciona una sala")
-        titulo_label.setFont(QFont('Times New Roman', 30))
-        titulo_label.adjustSize()
-        titulo_label.move(550, 15)
-        
-        Sala1_button = QPushButton(self)
-        Sala1_button.setText("Sala 1")
-        Sala1_button.setFont(QFont('Times New Roman', 15))
-        Sala1_button.adjustSize()
-        Sala1_button.resize(200, 40)
-        Sala1_button.move(630,220)
-        Sala1_button.clicked.connect(lambda: self.seleccionar_sala(1))
+        titulo_label.setText("Ha logrado comprar boletos")
+        titulo_label.setFont(QFont('Times New Roman', 35))
+        titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        titulo_label.setGeometry(400, 30, 650, 60)
 
-        Sala2_button = QPushButton(self)
-        Sala2_button.setText("Sala 2")
-        Sala2_button.setFont(QFont('Times New Roman', 15))
-        Sala2_button.adjustSize()
-        Sala2_button.resize(200, 40)
-        Sala2_button.move(630, 280)
-        Sala2_button.clicked.connect(lambda: self.seleccionar_sala(2))
-
-        Sala3_button = QPushButton(self)
-        Sala3_button.setText("Sala 3")
-        Sala3_button.setFont(QFont('Times New Roman', 15))
-        Sala3_button.adjustSize()
-        Sala3_button.resize(200, 40)
-        Sala3_button.move(630, 350)
-        Sala3_button.clicked.connect(lambda: self.seleccionar_sala(3))
+        self.resumen_text = QTextEdit(self)  #
+        self.resumen_text.setReadOnly(True)
+        self.resumen_text.setFont(QFont('Times New Roman', 14))
+        self.resumen_text.setGeometry(300, 120, 850, 450)
 
         volver_button = QPushButton(self)
-        volver_button.setText('Volver al inicio')
+        volver_button.setText("Volver al inicio")
         volver_button.setFont(QFont('Times New Roman', 12))
-        volver_button.adjustSize()
-        volver_button.resize(200, 50)
-        volver_button.move (10,15)
+        volver_button.setGeometry(750, 600, 300, 50)
         volver_button.clicked.connect(self.volver_inicio)
+    
+    def mostrar_resumen(self, venta, sala):
+        filas = ['A', 'B', 'C', 'D', 'E']
+        resumen = "="*60+"\n"
+        resumen+= "     Resumen\n"
+        resumen+= "="*60 + "\n\n"
+        resumen+= f"Sala: {sala.Numero}\n"
+        resumen+= f"Pelicula: {venta.Funcion.Pelicula}\n"
+        resumen+= f"Horario: {venta.Funcion.Horario}\n"
+        resumen+= f"Cantidad de entradas: {len(venta.asientos)}\n"
+        resumen+= f"Precio por entrada: $3000\n\n"
+        resumen+= f"Asientos comprados: \n"
+        for asiento in venta.asientos:
+            resumen += f"{filas[asiento.Fila]}{asiento.Columna+1}\n"
+        resumen += "="*60+"\n"
+        resumen += f"Total: ${venta.Total}\n"
+        resumen += "="*60+"\n"
 
-    def seleccionar_sala(self, numero_sala):
-        ventana_principal = self.window()
-        if isinstance(ventana_principal, VentanaP):
-            ventana_principal.mostrar_pelis(numero_sala)
+        self.resumen_text.setPlainText(resumen)
 
     def volver_inicio(self):
         ventana_principal = self.window()
-        if isinstance(ventana_principal, VentanaP):
+        if hasattr(ventana_principal, 'mostrar_inicio'):
             ventana_principal.mostrar_inicio()
 
-class FuncionesVista(QWidget):
+class MenuAdminVista(QWidget):
     def __init__(self, parent = None):
         super().__init__(parent)
-        self.sala_actual = 1
-        self.funciones_porSala = {
-            1: ["Peli 1 - matine", "Peli 2 - vermut", "Peli 3 - vespertino"], 
-            2: ["Peli 4 - matine", "Peli 5 - vermut", "Peli 6 - vespertino"], 
-            3: ["Peli 7 - matine", "Peli 8 - vermut", "Peli 9 - vespertino"]
-        }
+        self.inicializar()
+
+    def inicializar(self):
+        titulo_label = QLabel(self)
+        titulo_label.setText("Panel de Administración")
+        titulo_label.setFont(QFont('Times New Roman', 35))
+        titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        titulo_label.setGeometry(400, 50, 650, 60)
+
+        subtitulo_label = QLabel(self)
+        subtitulo_label.setText("Selecciona el tipo de reporte que deseas ver:")
+        subtitulo_label.setFont(QFont('Times New Roman', 16))
+        subtitulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        subtitulo_label.setGeometry(400, 130, 650, 40)
+
+        y_pos = 210
+        spacing = 80
+
+        sala_button = QPushButton(self)
+        sala_button.setText("Resumen de Ventas por Sala")
+        sala_button.setFont(QFont('Times New Roman', 14))
+        sala_button.setGeometry(525, y_pos, 400, 60)
+        sala_button.clicked.connect(lambda: self.ver_reporte('sala'))
+
+        funcion_button = QPushButton(self)
+        funcion_button.setText("Resumen de Ventas por Función")
+        funcion_button.setFont(QFont('Times New Roman', 14))
+        funcion_button.setGeometry(525, y_pos + spacing, 400, 60)
+        funcion_button.clicked.connect(lambda: self.ver_reporte('funcion'))
+
+        horario_button = QPushButton(self)
+        horario_button.setText("Resumen de Ventas por Horario")
+        horario_button.setFont(QFont('Times New Roman', 14))
+        horario_button.setGeometry(525, y_pos + spacing*2, 400, 60)
+        horario_button.clicked.connect(lambda: self.ver_reporte('horario'))
+
+        general_button = QPushButton(self)
+        general_button.setText("Resumen General del Dia")
+        general_button.setFont(QFont('Times New Roman', 14))
+        general_button.setGeometry(525, y_pos + spacing*3, 400, 60)
+        general_button.clicked.connect(lambda: self.ver_reporte('general'))
+
+        cerrar_button = QPushButton(self)
+        cerrar_button.setText("Cerrar Sesion")
+        cerrar_button.setFont(QFont('Times New Roman', 12))
+        cerrar_button.setGeometry(625, 620, 200, 50)
+        cerrar_button.clicked.connect(self.cerrar_sesion)
+
+    def ver_reporte(self, tipo_reporte):
+        ventana_principal = self.window()
+        if hasattr(ventana_principal, 'mostrar_reportes'):
+            ventana_principal.mostrar_reportes(tipo_reporte)
+    
+    def cerrar_sesion(self):
+        ventana_principal = self.window()
+        if hasattr(ventana_principal, 'mostrar_inicio'):
+            ventana_principal.mostrar_inicio()
+
+class ReporteVista(QWidget):
+    def __init__(self, parent = None):
+        super().__init__(parent)
+        self.main_objeto = None
+        self.salas = None
         self.inicializar()
 
     def inicializar(self):
         self.titulo_label = QLabel(self)
-        self.titulo_label.setText("Funciones - Sala 1")
+        self.titulo_label.setText("Reportes de Ventas")
         self.titulo_label.setFont(QFont('Times New Roman', 30))
-        self.titulo_label.adjustSize()
-        self.titulo_label.move(550, 15)
+        self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.titulo_label.setGeometry(400, 30, 650, 60)
 
-        self.Peli1_button = QPushButton(self)
-        self.Peli1_button.setText("Funcion 1 - Matine")
-        self.Peli1_button.setFont(QFont('Times New Roman', 15))
-        self.Peli1_button.adjustSize()
-        self.Peli1_button.resize(200, 40)
-        self.Peli1_button.move(630,220)
-        self.Peli1_button.clicked.connect(lambda: self.seleccionar_funcion(0))
-
-        self.Peli2_button = QPushButton(self)
-        self.Peli2_button.setText("Funcion 2 - Vermut")
-        self.Peli2_button.setFont(QFont('Times New Roman', 15))
-        self.Peli2_button.adjustSize()
-        self.Peli2_button.resize(200, 40)
-        self.Peli2_button.move(630, 280)
-        self.Peli2_button.clicked.connect(lambda: self.seleccionar_funcion(1))
-
-        self.Peli3_button = QPushButton(self)
-        self.Peli3_button.setText("Funcion 3 - Vespertino")
-        self.Peli3_button.setFont(QFont('Times New Roman', 15))
-        self.Peli3_button.adjustSize()
-        self.Peli3_button.resize(200, 40)
-        self.Peli3_button.move(630, 350)
-        self.Peli3_button.clicked.connect(lambda: self.seleccionar_funcion(2))
+        self.reporte_text = QTextEdit(self)
+        self.reporte_text.setReadOnly(True)
+        self.reporte_text.setFont(QFont('Courier New', 11))
+        self.reporte_text.setGeometry(200, 110, 1050, 530)
 
         volver_button = QPushButton(self)
-        volver_button.setText('Volver a las salas')
+        volver_button.setText("Volver al Menú de Administración")
         volver_button.setFont(QFont('Times New Roman', 12))
-        volver_button.adjustSize()
-        volver_button.resize(200, 50)
-        volver_button.move (10,15)
-        volver_button.clicked.connect(self.volver_salas)
+        volver_button.setGeometry(575, 660, 300, 50)
+        volver_button.clicked.connect(self.volver_menu_admin)
 
-    def set_sala(self, numero_sala):  #metodo setter, para que cambien las pelis segun la sala que eliga
-        self.sala_actual = numero_sala
-        self.titulo_label.setText(f'Funciones - Sala {numero_sala}')
-        pelis = self.funciones_porSala[numero_sala]
-        self.Peli1_button.setText(pelis[0])
-        self.Peli2_button.setText(pelis[1])
-        self.Peli3_button.setText(pelis[2])
+    def set_datos(self, main_objeto, salas):
+        self.main_objeto = main_objeto
+        self.salas = salas
 
-    def seleccionar_funcion(self, indice):
-        Funcion = self.funciones_porSala[self.sala_actual][indice]
-        QMessageBox.warning(self, "Desarrollo")
-
-    def volver_salas(self):
-        ventana_principal = self.window()
-        if isinstance(ventana_principal, VentanaP):
-            ventana_principal.mostrar_salas()
+    def generar_reporte(self, tipo_reporte):
+        if tipo_reporte == 'sala':
+            self.titulo_label.setText("Resumen de Ventas por Sala")
+            reporte = self.reporte_por_sala()
+        elif tipo_reporte == 'funcion':
+            self.titulo_label.setText("Resumen de Ventas por Función")
+            reporte = self.reporte_por_funcion()
+        elif tipo_reporte == 'horario':
+            self.titulo_label.setText("Resumen de Ventas por Horario")
+            reporte = self.reporte_por_horario()
+        else:  
+            self.titulo_label.setText("Resumen General del Día")
+            reporte = self.reporte_general()
         
+        self.reporte_text.setPlainText(reporte)
 
+    def reporte_por_sala(self):
+        reporte = "=" * 80 + "\n"
+        reporte += "     Resumen de venta por sala\n"
+        reporte += "=" * 80 + "\n\n"
+        
+        for sala in self.salas:
+            reporte += f"{'─' * 80}\n"
+            reporte += f"  Sala {sala.Numero}\n"
+            reporte += f"{'─' * 80}\n"
+            
+            total_sala = 0
+            entradas_sala = 0
+            
+            for funcion in sala.Funciones:
+                if funcion:
+                    entradas_vendidas = funcion.EntradasVendidas
+                    total_funcion = entradas_vendidas * 3000
+                    total_sala += total_funcion
+                    entradas_sala += entradas_vendidas
+                    reporte += f"{funcion.Pelicula} ({funcion.Horario})\n"
+                    reporte += f"Entradas vendidas: {entradas_vendidas}\n"
+                    reporte += f" Recaudación: ${total_funcion:,}\n\n"
+            reporte += f"  {'─' * 76}\n"
+            reporte += f"Total sala {sala.Numero}:\n"
+            reporte += f"Entradas vendidas: {entradas_sala}\n"
+            reporte += f"Total: ${total_sala:,}\n"
+            reporte += f"  {'─' * 76}\n\n"
+        return reporte
+
+    def reporte_por_funcion(self):
+        reporte = "=" * 80 + "\n"
+        reporte += "  Resumen de venta por funcion\n"
+        reporte += "=" * 80 + "\n\n"
+        total_general = 0
+        
+        for sala in self.salas:
+            for funcion in sala.Funciones:
+                if funcion:
+                    entradas_vendidas = funcion.EntradasVendidas
+                    total_funcion = entradas_vendidas * 3000
+                    total_general += total_funcion
+                    reporte += f"{'─' * 80}\n"
+                    reporte += f" {funcion.Pelicula}\n"
+                    reporte += f"{'─' * 80}\n"
+                    reporte += f"Sala: {sala.Numero}\n"
+                    reporte += f"Horario: {funcion.Horario}\n"
+                    reporte += f"Entradas vendidas: {entradas_vendidas}\n"
+                    reporte += f"Total: ${total_funcion:,}\n\n"
+        reporte += f"{'═' * 80}\n"
+        reporte += f"Total general: ${total_general:,}\n"
+        reporte += f"{'═' * 80}\n"
+        return reporte
+
+    def reporte_por_horario(self):
+        reporte = "=" * 80 + "\n"
+        reporte += "  Resumen de venta por horario\n"
+        reporte += "=" * 80 + "\n\n"
+        horarios = {}
+        
+        for sala in self.salas:
+            for funcion in sala.Funciones:
+                if funcion:
+                    horario = funcion.Horario
+                    if horario not in horarios:
+                        horarios[horario] = {'entradas': 0, 'total': 0, 'funciones': []}
+                    entradas_vendidas = funcion.EntradasVendidas
+                    total_funcion = entradas_vendidas * 3000
+                    horarios[horario]['entradas'] += entradas_vendidas
+                    horarios[horario]['total'] += total_funcion
+                    horarios[horario]['funciones'].append({
+                        'sala': sala.Numero,
+                        'pelicula': funcion.Pelicula,
+                        'entradas': entradas_vendidas,
+                        'total': total_funcion
+                    })
+        total_general = 0
+        
+        for horario, datos in horarios.items():
+            reporte += f"{'─' * 80}\n"
+            reporte += f" {horario.upper()}\n"
+            reporte += f"{'─' * 80}\n"
+            
+            for func in datos['funciones']:
+                reporte += f" Sala {func['sala']} - {func['pelicula']}\n"
+                reporte += f"Entradas: {func['entradas']} | Total: ${func['total']:,}\n"
+            reporte += f"\n  Total {horario}:\n"
+            reporte += f"Entradas vendidas: {datos['entradas']}\n"
+            reporte += f"Total: ${datos['total']:,}\n\n"
+            total_general += datos['total']
+        reporte += f"{'═' * 80}\n"
+        reporte += f"Total general: ${total_general:,}\n"
+        reporte += f"{'═' * 80}\n"
+        return reporte
+
+    def reporte_general(self):
+        reporte = "=" * 80 + "\n"
+        reporte += "  Resumen general del dia\n"
+        reporte += "=" * 80 + "\n\n"
+        total_entradas = 0
+        total_recaudacion = 0
+        reporte += "  Detalle por sala:\n"
+        reporte += f"  {'─' * 76}\n\n"
+        
+        for sala in self.salas:
+            total_sala = 0
+            entradas_sala = 0
+            
+            for funcion in sala.Funciones:
+                if funcion:
+                    entradas_vendidas = funcion.EntradasVendidas
+                    total_funcion = entradas_vendidas * 3000
+                    total_sala += total_funcion
+                    entradas_sala += entradas_vendidas
+            total_entradas += entradas_sala
+            total_recaudacion += total_sala
+            reporte += f"Sala {sala.Numero}:\n"
+            reporte += f"Entradas: {entradas_sala} | Total: ${total_sala:,}\n\n"
+        reporte += f"  {'─' * 76}\n\n"
+        reporte += "Estadisticas generales:\n"
+        reporte += f"  {'─' * 76}\n"
+        reporte += f"Total de entradas vendidas: {total_entradas}\n"
+        reporte += f"Precio por entrada: $3,000\n"
+        reporte += f"Capacidad total del cine: 75 asientos (3 salas)\n"
+        
+        if total_entradas > 0:
+            ocupacion = (total_entradas / 75) * 100
+            reporte += f"Ocupación del día: {ocupacion:.1f}%\n"
+        reporte += f"\n  {'─' * 76}\n"
+        reporte += f"  {'═' * 76}\n"
+        reporte += f"Total del dia: ${total_recaudacion:,}\n"
+        reporte += f"  {'═' * 76}\n"
+        return reporte
+
+    def volver_menu_admin(self):
+        ventana_principal = self.window()
+        if hasattr(ventana_principal, 'mostrar_menu_admin'):
+            ventana_principal.mostrar_menu_admin()
 
 class VentanaP(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, main_objeto, salas, parent=None):
         super().__init__(parent)
+        self.main_objeto = main_objeto
+        self.salas = salas
         self.inicializar() 
 
     def inicializar(self):  
-        self.setWindowTitle("Cine")
+        self.setWindowTitle("Cinema -1")
         self.setGeometry(50, 50, 1450, 720)
 
         self.central_widget = QStackedWidget()
         self.setCentralWidget(self.central_widget)
 
-        self.vista_inicio = Inicio(self)
-        self.vista_salas = SalasVista(self)
-        self.vista_pelis = FuncionesVista(self)
+        self.vista_inicio = InicioVista(self.salas, self)
         self.vista_admin = AdminVista(self)
+        self.vista_asientos = AsientosVista(self)
+        self.vista_resumen = ResumenVista(self)
+        self.vista_menu_admin = MenuAdminVista(self)
+        self.vista_reportes = ReporteVista(self)
+        
+        self.vista_reportes.set_datos(self.main_objeto, self.salas)
 
         self.central_widget.addWidget(self.vista_inicio)
-        self.central_widget.addWidget(self.vista_salas)
-        self.central_widget.addWidget(self.vista_pelis)
         self.central_widget.addWidget(self.vista_admin)
+        self.central_widget.addWidget(self.vista_asientos)
+        self.central_widget.addWidget(self.vista_resumen)
+        self.central_widget.addWidget(self.vista_menu_admin)
+        self.central_widget.addWidget(self.vista_reportes)
 
         self.central_widget.setCurrentWidget(self.vista_inicio)
 
     def mostrar_inicio(self):
         self.central_widget.setCurrentWidget(self.vista_inicio)
 
-    def mostrar_salas(self):
-        self.central_widget.setCurrentWidget(self.vista_salas)
-
-    def mostrar_pelis(self, numero_sala):
-        self.vista_pelis.set_sala(numero_sala)
-        self.central_widget.setCurrentWidget(self.vista_pelis)
-        
     def mostrar_admin(self):
         self.central_widget.setCurrentWidget(self.vista_admin)
+
+    def mostrar_asientos(self, sala_obj, indice_funcion):
+        funcion = sala_obj.Funciones[indice_funcion]
+        self.vista_asientos.set_funcion(sala_obj, funcion, indice_funcion, self.main_objeto)
+        self.central_widget.setCurrentWidget(self.vista_asientos)
+    
+    def mostrar_resumen(self, venta, sala):
+        self.vista_resumen.mostrar_resumen(venta, sala)
+        self.central_widget.setCurrentWidget(self.vista_resumen)
+
+    def mostrar_menu_admin(self):
+        self.central_widget.setCurrentWidget(self.vista_menu_admin)
+        
+    def mostrar_reportes(self, tipo_reporte):
+        self.vista_reportes.generar_reporte(tipo_reporte)
+        self.central_widget.setCurrentWidget(self.vista_reportes)
+    
