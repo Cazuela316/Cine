@@ -1,3 +1,2 @@
 # Cine
-odio esto
-LO ODIO OMGOMGOMGVEOPANBIHKJEASDHNDSBGXKVAESNSBZJNIK!!!
+$${\color{red}\Huge Esta\space rama\space ya\space no\space se\space usa}$$
