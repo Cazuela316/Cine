@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QMainWindow, QWidget, QLabel, QPushButton, QLineEdit, QMessageBox, QStackedWidget, QTextEdit
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QPixmap
 import Asientos as A
 
 class InicioVista(QWidget):
@@ -11,56 +11,87 @@ class InicioVista(QWidget):
         self.inicializar()
 
     def inicializar(self):
+        self.NombredePelis = {
+        "Shrek": "Peli1",
+        "Five Nights At Freddy's": "Peli2", 
+        "Five Nights At Freddy's 2": "Peli3",
+        "Interestelar": "Peli4",
+        "Avengers: Endgame": "Peli5",
+        "El Señor De Los Anillos": "Peli6",
+        "Zootopia 2": "Peli7",
+        "Project Sekai: Miku No Puede Cantar": "Peli8",
+        "Chiikawa: El Secreto de la Isla Marina": "Peli9"
+    }
         Hola_label = QLabel (self)
-        Hola_label.setText("Bienvenido a Cinema")
-        Hola_label.setFont(QFont('Cinzel', 30))
+        Hola_label.setText("¡Bienvenido a Cinema!")
+        Hola_label.setFont(QFont('Belanosima', 30))
         Hola_label.adjustSize()
         Hola_label.move(520, 15)
         
         Admin_button = QPushButton(self)
         Admin_button.setText('Administrador')
-        Admin_button.setFont(QFont('Times New Roman', 10))
+        Admin_button.setFont(QFont('Tektur', 10))
         Admin_button.setGeometry(1330, 10, 100, 35)
         Admin_button.clicked.connect(self.entrar_admin)
 
         sala1_label = QLabel(self)
         sala1_label.setText("Sala 1")
-        sala1_label.setFont(QFont('Times New Roman', 18))
+        sala1_label.setFont(QFont('Lokeya', 18))
         sala1_label.setGeometry(100, 150, 150, 40)
 
         for i, funcion in enumerate(self.salas[0].Funciones): 
             if funcion:
+                imagen_label = QLabel(self)
+                nombre_archivo = self.NombredePelis.get(funcion.Pelicula, funcion.Pelicula)
+                pixmap = QPixmap(f"img/{nombre_archivo}.png")
+                pixmap = pixmap.scaled(100, 140)
+                imagen_label.setPixmap(pixmap)
+                imagen_label.setGeometry(390 + i*350, 70, 100, 140)
                 seleccion_button = QPushButton(self)
                 seleccion_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
-                seleccion_button.setFont(QFont('Times New Roman', 12))
-                seleccion_button.setGeometry(280 + i*350, 150, 320, 50)
-                seleccion_button.clicked.connect(lambda checked, s=self.salas[0], iax=i: self.seleccionar_funcion(s,iax)) 
+                seleccion_button.setFont(QFont('Dosis', 12))
+                seleccion_button.setGeometry(280 + i*350, 220, 320, 50)
+                seleccion_button.clicked.connect(lambda checked, s=self.salas[0], iax=i: self.seleccionar_funcion(s,iax))
 
         sala2_label = QLabel(self)
         sala2_label.setText("Sala 2")
-        sala2_label.setFont(QFont('Times New Roman', 18))
-        sala2_label.setGeometry(100, 265, 150, 40)
+        sala2_label.setFont(QFont('Lokeya', 18))
+        sala2_label.setGeometry(100, 340, 150, 40)
+        
 
         for i, funcion in enumerate(self.salas[1].Funciones):
             if funcion:
+                imagen_label2 = QLabel(self)
+                nombre_archivo = self.NombredePelis.get(funcion.Pelicula, funcion.Pelicula)
+                pixmap = QPixmap(f"img/{nombre_archivo}.png")
+                pixmap = pixmap.scaled(100, 140)
+                imagen_label2.setPixmap(pixmap)
+                imagen_label2.setGeometry(390 + i*350, 290, 100, 140)
                 seleccion2_button = QPushButton(self)
                 seleccion2_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
-                seleccion2_button.setFont(QFont('Times New Roman', 12))
-                seleccion2_button.setGeometry(280 + i*350, 265, 320, 50)
+                seleccion2_button.setFont(QFont('Dosis', 12))
+                seleccion2_button.setGeometry(280 + i*350, 440, 320, 50)
+                print(f"Creando botón Sala 2: {funcion.Pelicula}, posición {i}")
                 seleccion2_button.clicked.connect(lambda checked, s=self.salas[1], iax=i: self.seleccionar_funcion(s,iax))
 
         sala3_label = QLabel(self)
         sala3_label.setText("Sala 3")
-        sala3_label.setFont(QFont('Times New Roman', 18))
-        sala3_label.setGeometry(100, 380, 150, 40)
+        sala3_label.setFont(QFont('Lokeya', 18))
+        sala3_label.setGeometry(100, 550, 150, 40)
 
         for i, funcion in enumerate(self.salas[2].Funciones):
             if funcion:
-                seleccion2_button = QPushButton(self)
-                seleccion2_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
-                seleccion2_button.setFont(QFont('Times New Roman', 12))
-                seleccion2_button.setGeometry(280 + i*350, 350, 320, 50)
-                seleccion2_button.clicked.connect(lambda checked, s=self.salas[2], iax=i: self.seleccionar_funcion(s,iax))
+                imagen_label3 = QLabel(self)
+                nombre_archivo = self.NombredePelis.get(funcion.Pelicula, funcion.Pelicula)
+                pixmap = QPixmap(f"img/{nombre_archivo}.png")
+                pixmap = pixmap.scaled(100, 140)
+                imagen_label3.setPixmap(pixmap)
+                imagen_label3.setGeometry(390 + i*350, 510, 100, 140)
+                seleccion3_button = QPushButton(self)
+                seleccion3_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
+                seleccion3_button.setFont(QFont('Dosis', 12))
+                seleccion3_button.setGeometry(280 + i*350, 660, 320, 50)
+                seleccion3_button.clicked.connect(lambda checked, s=self.salas[2], iax=i: self.seleccionar_funcion(s,iax))
 
     def seleccionar_funcion(self, sala, indice):
         ventana_principal = self.window()
@@ -80,13 +111,13 @@ class AdminVista(QWidget):
     def inicio(self):
         self.titulo_label = QLabel(self)
         self.titulo_label.setText("Ingrese sus datos de administrador: ")   
-        self.titulo_label.setFont(QFont('Times New Roman', 30))
+        self.titulo_label.setFont(QFont('Tektur', 30))
         self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.titulo_label.setGeometry(450, 50, 570, 50)
+        self.titulo_label.setGeometry(400, 50, 730, 50)
 
         usuario_label = QLabel(self)
         usuario_label.setText("Usuario:")
-        usuario_label.setFont(QFont('Times New Roman', 15))
+        usuario_label.setFont(QFont('Tektur', 15))
         usuario_label.setGeometry(500, 200, 100, 30)
 
         self.usuario_input = QLineEdit(self)
@@ -95,7 +126,7 @@ class AdminVista(QWidget):
 
         contra_label = QLabel(self)
         contra_label.setText("Contraseña:")
-        contra_label.setFont(QFont('Times New Roman', 15))
+        contra_label.setFont(QFont('Tektur', 15))
         contra_label.setGeometry(500, 270, 120, 30)
 
         self.contra_input = QLineEdit(self)
@@ -105,13 +136,13 @@ class AdminVista(QWidget):
 
         ingresar_button = QPushButton(self)
         ingresar_button.setText('Ingresar')
-        ingresar_button.setFont(QFont('Times New Roman', 12))
+        ingresar_button.setFont(QFont('Tektur', 12))
         ingresar_button.setGeometry(600, 340, 200, 50)
         ingresar_button.clicked.connect(self.validar_inicio)
 
         volver_button = QPushButton(self)
         volver_button.setText('Volver al inicio')
-        volver_button.setFont(QFont('Times New Roman', 12))
+        volver_button.setFont(QFont('Tektur', 12))
         volver_button.setGeometry(20, 20, 120, 40)
         volver_button.clicked.connect(self.volver_inicio)
 
@@ -124,9 +155,9 @@ class AdminVista(QWidget):
             if isinstance(ventana_principal, VentanaP):
                 ventana_principal.mostrar_menu_admin()
         elif usuario == "" or contra == "":
-            QMessageBox.warning(self, "Error", "Faltan datos")
+            QMessageBox.warning(self, "Error", "¡Faltan datos!")
         else:
-            QMessageBox.warning(self, "Error", "Usuario o contraseña incorrectos")
+            QMessageBox.warning(self, "Error", "Usuario o contraseña incorrectos.")
 
     def volver_inicio(self):
         self.usuario_input.clear()
@@ -148,16 +179,16 @@ class AsientosVista(QWidget):
 
     def inicializar(self):
         self.titulo_label = QLabel(self)
-        self.titulo_label.setText("Eliga sus asientos")
-        self.titulo_label.setFont(QFont('Times New Roman', 30))
+        self.titulo_label.setText("Elija sus asientos")
+        self.titulo_label.setFont(QFont('Belanosima', 30))
         self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.titulo_label.setGeometry(400, 20, 650, 50)
 
         self.info_label = QLabel(self)
         self.info_label.setText("")
-        self.info_label.setFont(QFont('Times New Roman', 22))
+        self.info_label.setFont(QFont('Dosis', 22))
         self.info_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.info_label.setGeometry(400, 80, 650, 30)
+        self.info_label.setGeometry(400, 80, 650, 35)
 
         disponible_label = QLabel(self)
         disponible_label.setText(" _ = Disponible")
@@ -205,19 +236,19 @@ class AsientosVista(QWidget):
 
         self.total_label = QLabel(self)
         self.total_label.setText("Total: $0")
-        self.total_label.setFont(QFont('Times New Roman', 18))
+        self.total_label.setFont(QFont('Dosis', 18))
         self.total_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.total_label.setGeometry(550, 610, 350, 40)
 
         volver_button = QPushButton(self)
         volver_button.setText("Volver a las funciones")
-        volver_button.setFont(QFont('Times New Roman', 12))
+        volver_button.setFont(QFont('Lokeya', 12))
         volver_button.setGeometry(20, 20, 200, 50)
         volver_button.clicked.connect(self.volver_funciones)
         
         confirmar_button = QPushButton(self)
         confirmar_button.setText("Confirmar Compra")
-        confirmar_button.setFont(QFont('Times New Roman', 12))
+        confirmar_button.setFont(QFont('Belanosima', 12))
         confirmar_button.setGeometry(625, 660, 200, 50)
         confirmar_button.clicked.connect(self.confirmar_compra)
     
@@ -248,7 +279,7 @@ class AsientosVista(QWidget):
         estado = self.funcion_actual.Asientos[fila][columna]
 
         if estado == 1:
-            QMessageBox.warning(self, "Asiento Ocupado", "Este asiento esta ocupado. Porfavor eliga otro")
+            QMessageBox.warning(self, "Asiento Ocupado", "Este asiento esta ocupado. Porfavor elija otro")
             return
         
         asiento_coord = (fila, columna) 
@@ -306,8 +337,8 @@ class ResumenVista(QWidget):
 
     def inicializar(self):
         titulo_label = QLabel(self)
-        titulo_label.setText("Boletos comprados")
-        titulo_label.setFont(QFont('Times New Roman', 35))
+        titulo_label.setText("¡Boletos comprados!")
+        titulo_label.setFont(QFont('Belanosima', 35))
         titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         titulo_label.setGeometry(400, 30, 650, 60)
 
@@ -318,14 +349,14 @@ class ResumenVista(QWidget):
 
         volver_button = QPushButton(self)
         volver_button.setText("Volver al inicio")
-        volver_button.setFont(QFont('Times New Roman', 12))
+        volver_button.setFont(QFont('Belanosima', 12))
         volver_button.setGeometry(750, 600, 300, 50)
         volver_button.clicked.connect(self.volver_inicio)
     
     def mostrar_resumen(self, venta, sala):
         filas = ['A', 'B', 'C', 'D', 'E']
         resumen = "ღ"*124+"\n\n"
-        resumen+= "Resumen\n"
+        resumen+= "~ Resumen ~\n"
         resumen+= f"    Sala: {sala.Numero}\n"
         resumen+= f"    Pelicula: {venta.Funcion.Pelicula}\n"
         resumen+= f"    Horario: {venta.Funcion.Horario}\n"
@@ -333,7 +364,7 @@ class ResumenVista(QWidget):
         resumen+= f"    Precio por entrada: $3000\n"
         resumen+= f"    Asientos comprados: "
         for asiento in venta.asientos:
-            resumen += f" {filas[asiento.Fila]}{asiento.Columna+1}\n\n"
+            resumen += f" {filas[asiento.Fila]}{asiento.Columna+1} "
         resumen += "ღ"*62+"\n\n"
         resumen += f"Total: ${venta.Total}\n\n\n"
         resumen += "ღ"*124+"\n"
@@ -353,43 +384,43 @@ class MenuAdminVista(QWidget):
     def inicializar(self):
         titulo_label = QLabel(self)
         titulo_label.setText("Has entrado como Administrador")
-        titulo_label.setFont(QFont('Times New Roman', 35))
+        titulo_label.setFont(QFont('Tektur', 35))
         titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        titulo_label.setGeometry(400, 50, 650, 60)
+        titulo_label.setGeometry(380, 50, 760, 60)
 
         subtitulo_label = QLabel(self)
-        subtitulo_label.setText("Eliga el resumen que quiera ver: ")
-        subtitulo_label.setFont(QFont('Times New Roman', 16))
+        subtitulo_label.setText("Elija el resumen que quiera ver: ")
+        subtitulo_label.setFont(QFont('Tektur', 16))
         subtitulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         subtitulo_label.setGeometry(400, 130, 650, 40)
 
         sala_button = QPushButton(self)
         sala_button.setText("Resumen de Ventas por Sala")
-        sala_button.setFont(QFont('Times New Roman', 14))
+        sala_button.setFont(QFont('Tektur', 14))
         sala_button.setGeometry(525, 210, 400, 60)
         sala_button.clicked.connect(lambda: self.ver_reporte('sala'))
 
         funcion_button = QPushButton(self)
         funcion_button.setText("Resumen de Ventas por Función")
-        funcion_button.setFont(QFont('Times New Roman', 14))
+        funcion_button.setFont(QFont('Tektur', 14))
         funcion_button.setGeometry(525, 210 + 80, 400, 60)
         funcion_button.clicked.connect(lambda: self.ver_reporte('funcion'))
 
         horario_button = QPushButton(self)
         horario_button.setText("Resumen de Ventas por Horario")
-        horario_button.setFont(QFont('Times New Roman', 14))
+        horario_button.setFont(QFont('Tektur', 14))
         horario_button.setGeometry(525, 210 + 80*2, 400, 60)
         horario_button.clicked.connect(lambda: self.ver_reporte('horario'))
 
         general_button = QPushButton(self)
         general_button.setText("Resumen General del Dia")
-        general_button.setFont(QFont('Times New Roman', 14))
+        general_button.setFont(QFont('Tektur', 14))
         general_button.setGeometry(525, 210 + 80*3, 400, 60)
         general_button.clicked.connect(lambda: self.ver_reporte('general'))
 
         cerrar_button = QPushButton(self)
         cerrar_button.setText("Cerrar Sesion")
-        cerrar_button.setFont(QFont('Times New Roman', 12))
+        cerrar_button.setFont(QFont('Tektur', 12))
         cerrar_button.setGeometry(20, 20, 200, 50)
         cerrar_button.clicked.connect(self.cerrar_sesion)
 
@@ -424,7 +455,7 @@ class ReporteVista(QWidget):
 
         volver_button = QPushButton(self)
         volver_button.setText("Volver al Menú de Administración")
-        volver_button.setFont(QFont('Times New Roman', 12))
+        volver_button.setFont(QFont('Tektur', 12))
         volver_button.setGeometry(20, 20, 300, 50)
         volver_button.clicked.connect(self.volver_menu_admin)
 

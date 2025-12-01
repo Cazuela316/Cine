@@ -5,6 +5,7 @@ import Funcion as F
 import Asientos as A
 import Sala as S
 import Ventas as V
+import font_loader as FL
 from Ventana import VentanaP
 
 class Main:
@@ -27,17 +28,17 @@ class Main:
 
 
 def main():
-    F1=F.Funcion("Matiné", "Peli1", 0)
-    F2=F.Funcion("Vermut", "Peli2", 0)
-    F3=F.Funcion("Vespertina", "Peli3", 0)
+    F1=F.Funcion("Matiné", "Shrek", 0)
+    F2=F.Funcion("Vermut", "Five Nights At Freddy's", 0)
+    F3=F.Funcion("Vespertina", "Five Nights At Freddy's 2", 0)
 
-    F4=F.Funcion("Matiné", "Peli4", 0)
-    F5=F.Funcion("Vermut", "Peli5", 0)
-    F6=F.Funcion("Vespertina", "Peli6", 0)
+    F4=F.Funcion("Matiné", "Interestelar", 0)
+    F5=F.Funcion("Vermut", "Avengers: Endgame", 0)
+    F6=F.Funcion("Vespertina", "El Señor De Los Anillos", 0)
 
-    F7=F.Funcion("Matiné", "Peli7", 0)
-    F8=F.Funcion("Vermut", "Peli8", 0)
-    F9=F.Funcion("Vespertina", "Peli9", 0)
+    F7=F.Funcion("Matiné", "Zootopia 2", 0)
+    F8=F.Funcion("Vermut", "Project Sekai: Miku No Puede Cantar", 0)
+    F9=F.Funcion("Vespertina", "Chiikawa: El Secreto de la Isla Marina", 0)
 
     S1=S.Sala(1, None)
     S1.Funciones[0]=F1
@@ -54,8 +55,8 @@ def main():
 
     Cine=Main("Cine-1",100000, None, None, 0, None, 0)
     Cine.Salas = [S1, S2, S3]
-    
     app = QApplication(sys.argv)
+    FL.cargar_fuentes()
     ventana = VentanaP(Cine, [S1, S2, S3])
     ventana.show()
     sys.exit(app.exec())
