@@ -1,8 +1,6 @@
 import sys
-import Funcion,Ventas,Sala,Asientos
 from PyQt6.QtWidgets import QApplication
 import Funcion as F
-import Asientos as A
 import Sala as S
 import Ventas as V
 import font_loader as FL
