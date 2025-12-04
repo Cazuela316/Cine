@@ -97,8 +97,23 @@ class InicioVista(QWidget):
                 seleccion3_button.clicked.connect(lambda checked, s=self.salas[2], iax=i: self.seleccionar_funcion(s,iax))
 
     def seleccionar_funcion(self, sala, indice):
+        funcion = sala.Funciones[indice]
+
+        asientos_disponibles = 0
+        for i in range (5):
+            for j in range (5):
+                if funcion.Asientos[i][j] == 0:
+                    asientos_disponibles +=1
+
+        if asientos_disponibles == 0: 
+            QMessageBox.warning (self, "Sala llena", f"Lo sentimos, la funcion de {funcion.Pelicula} ({funcion.Horario}) esta llena\n\n" f"Por lo tanto no quedan asientos disponibles. Porfavor eliga otra funcion")
+            ventana_principal = self.window()
+            if hasattr(ventana_principal, 'mostrar_inicio'):
+                    ventana_principal.mostrar_inicio()
+            return
+        
         ventana_principal = self.window()
-        if isinstance(ventana_principal, VentanaP):   
+        if hasattr(ventana_principal, 'mostrar_asientos'):
             ventana_principal.mostrar_asientos(sala, indice)
 
     def entrar_admin(self):
