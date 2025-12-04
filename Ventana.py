@@ -44,9 +44,13 @@ class InicioVista(QWidget):
 
         for i, funcion in enumerate(self.salas[0].Funciones): 
             if funcion:
+                asientos_disponibles = sum(1 for fila in funcion.Asientos for asiento in fila if asiento == 0)
                 imagen_label = QLabel(self)
                 nombre_archivo = self.NombredePelis.get(funcion.Pelicula, funcion.Pelicula)
-                pixmap = QPixmap(f"img/{nombre_archivo}.png")
+                if asientos_disponibles == 0:
+                    pixmap = QPixmap(f"img/{nombre_archivo}x.png")
+                else:
+                    pixmap = QPixmap(f"img/{nombre_archivo}.png")
                 pixmap = pixmap.scaled(100, 140)
                 imagen_label.setPixmap(pixmap)
                 imagen_label.setGeometry(390 + i*350, 70, 100, 140)
@@ -64,9 +68,13 @@ class InicioVista(QWidget):
 
         for i, funcion in enumerate(self.salas[1].Funciones):
             if funcion:
+                asientos_disponibles = sum(1 for fila in funcion.Asientos for asiento in fila if asiento == 0)
                 imagen_label2 = QLabel(self)
                 nombre_archivo = self.NombredePelis.get(funcion.Pelicula, funcion.Pelicula)
-                pixmap = QPixmap(f"img/{nombre_archivo}.png")
+                if asientos_disponibles == 0:
+                    pixmap = QPixmap(f"img/{nombre_archivo}x.png")
+                else:
+                    pixmap = QPixmap(f"img/{nombre_archivo}.png")
                 pixmap = pixmap.scaled(100, 140)
                 imagen_label2.setPixmap(pixmap)
                 imagen_label2.setGeometry(390 + i*350, 290, 100, 140)
@@ -84,9 +92,13 @@ class InicioVista(QWidget):
 
         for i, funcion in enumerate(self.salas[2].Funciones):
             if funcion:
+                asientos_disponibles = sum(1 for fila in funcion.Asientos for asiento in fila if asiento == 0)
                 imagen_label3 = QLabel(self)
                 nombre_archivo = self.NombredePelis.get(funcion.Pelicula, funcion.Pelicula)
-                pixmap = QPixmap(f"img/{nombre_archivo}.png")
+                if asientos_disponibles == 0:
+                    pixmap = QPixmap(f"img/{nombre_archivo}x.png")
+                else:
+                    pixmap = QPixmap(f"img/{nombre_archivo}.png")
                 pixmap = pixmap.scaled(100, 140)
                 imagen_label3.setPixmap(pixmap)
                 imagen_label3.setGeometry(390 + i*350, 510, 100, 140)
@@ -218,6 +230,18 @@ class VentanaP(QMainWindow):
         self.central_widget.setCurrentWidget(self.vista_inicio)
 
     def mostrar_inicio(self):
+        self.central_widget.setCurrentWidget(self.vista_inicio)
+        
+        #Elimina la vista anterior
+        self.central_widget.removeWidget(self.vista_inicio)
+    
+        #Crea una nueva vista con los datos actualizados
+        self.vista_inicio = InicioVista(self.salas, self)
+    
+        #Agrega la nueva vista en la misma posición (en el indice 0)
+        self.central_widget.insertWidget(0, self.vista_inicio)
+    
+        #Muestra la nueva vista
         self.central_widget.setCurrentWidget(self.vista_inicio)
 
     def mostrar_admin(self):

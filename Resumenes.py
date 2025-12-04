@@ -23,7 +23,7 @@ class ResumenVista(QWidget):
         volver_button = QPushButton(self)
         volver_button.setText("Volver al inicio")
         volver_button.setFont(QFont('Belanosima', 12))
-        volver_button.setGeometry(750, 600, 300, 50)
+        volver_button.setGeometry(20, 20, 300, 50)
         volver_button.clicked.connect(self.volver_inicio)
     
     def mostrar_resumen(self, venta, sala):
