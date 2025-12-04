@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QMainWindow, QWidget, QLabel, QPushButton, QLineEdit, QMessageBox, QStackedWidget, QTextEdit
+from PyQt6.QtWidgets import QMainWindow, QWidget, QLabel, QPushButton, QLineEdit, QMessageBox, QStackedWidget, QTextEdit, QFrame
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont, QPixmap
 import Asientos as A
@@ -25,6 +25,7 @@ class InicioVista(QWidget):
         Hola_label = QLabel (self)
         Hola_label.setText("¡Bienvenido a Cinema!")
         Hola_label.setFont(QFont('Belanosima', 30))
+        Hola_label.setStyleSheet("color: #e46e2a;")
         Hola_label.adjustSize()
         Hola_label.move(520, 15)
         
@@ -71,11 +72,11 @@ class InicioVista(QWidget):
                 seleccion2_button.setText(f"{funcion.Pelicula}\n({funcion.Horario})")
                 seleccion2_button.setFont(QFont('Dosis', 12))
                 seleccion2_button.setGeometry(280 + i*350, 440, 320, 50)
-                print(f"Creando botón Sala 2: {funcion.Pelicula}, posición {i}")
                 seleccion2_button.clicked.connect(lambda checked, s=self.salas[1], iax=i: self.seleccionar_funcion(s,iax))
 
         sala3_label = QLabel(self)
         sala3_label.setText("Sala 3")
+        # Ejemplo de como ponerle color a una letra sala3_label.setStyleSheet("Color: #278EF5")
         sala3_label.setFont(QFont('Lokeya', 18))
         sala3_label.setGeometry(100, 550, 150, 40)
 
@@ -182,6 +183,7 @@ class AsientosVista(QWidget):
         self.titulo_label.setText("Elija sus asientos")
         self.titulo_label.setFont(QFont('Belanosima', 30))
         self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.titulo_label.setStyleSheet("color: #e46e2a;")
         self.titulo_label.setGeometry(400, 20, 650, 50)
 
         self.info_label = QLabel(self)
@@ -190,20 +192,27 @@ class AsientosVista(QWidget):
         self.info_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.info_label.setGeometry(400, 80, 650, 35)
 
-        disponible_label = QLabel(self)
+        Cajita_extraña=QFrame(self)
+        Cajita_extraña.setGeometry(1120, 300, 220, 130)
+        Cajita_extraña.setStyleSheet("border: 2px solid #FFFFFF;")
+        
+        disponible_label = QLabel(Cajita_extraña)
         disponible_label.setText(" _ = Disponible")
         disponible_label.setFont(QFont('Courier New', 14))
-        disponible_label.setGeometry(1050, 280, 200, 30)
+        disponible_label.setStyleSheet("color: #d6def3;  border: none;")
+        disponible_label.setGeometry(10, 10, 200, 30)
 
-        ocupado_label = QLabel(self)
+        ocupado_label = QLabel(Cajita_extraña)
         ocupado_label.setText(" x = Ocupado")
         ocupado_label.setFont(QFont('Courier New', 14))
-        ocupado_label.setGeometry(1050, 360, 200, 30)
+        ocupado_label.setStyleSheet("color: #d6def3;  border: none;")
+        ocupado_label.setGeometry(10, 90, 200, 30)
 
-        seleccionado_label = QLabel(self)
+        seleccionado_label = QLabel(Cajita_extraña)
         seleccionado_label.setText(" o = Seleccionado")
         seleccionado_label.setFont(QFont('Courier New', 14))
-        seleccionado_label.setGeometry(1050, 320, 200, 30)
+        seleccionado_label.setStyleSheet("color: #d6def3; border: none;")
+        seleccionado_label.setGeometry(10, 50, 200, 30)
 
         for j in range(5):
             columna_label = QLabel(str(j+1), self)
@@ -236,6 +245,7 @@ class AsientosVista(QWidget):
 
         self.total_label = QLabel(self)
         self.total_label.setText("Total: $0")
+        self.total_label.setStyleSheet("color: #17c71a;")
         self.total_label.setFont(QFont('Dosis', 18))
         self.total_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.total_label.setGeometry(550, 610, 350, 40)
@@ -385,8 +395,9 @@ class MenuAdminVista(QWidget):
         titulo_label = QLabel(self)
         titulo_label.setText("Has entrado como Administrador")
         titulo_label.setFont(QFont('Tektur', 35))
+        titulo_label.setStyleSheet("color: #41E329;")
         titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        titulo_label.setGeometry(380, 50, 760, 60)
+        titulo_label.setGeometry(370, 50, 760, 60)
 
         subtitulo_label = QLabel(self)
         subtitulo_label.setText("Elija el resumen que quiera ver: ")
