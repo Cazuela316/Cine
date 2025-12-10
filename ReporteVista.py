@@ -47,15 +47,28 @@ class ReporteVista(QWidget):
             self.titulo_label.setText("Resumen General del Día")
             reporte = self.reporte_general()
         
-        self.reporte_text.setPlainText(reporte)
+        reporte_html = reporte.replace('▬', '<span style="color: #FF5722;">▬</span>')
+        
+        reporte_html = f'<pre style="font-family: Courier New; font-size: 11pt;">{reporte_html}</pre>'
+
+        self.reporte_text.setHtml(reporte_html)
 
     def reporte_por_sala(self):
-        reporte = "="*80+"\n"
-        reporte += "     Resumen de venta por sala\n"
-        reporte += "="*80+"\n\n"
+
+        reporte = "\n"
+        reporte += f"{'▬'*150}\n"
+        reporte += "                        _____                                           _____       _       \n"
+        reporte += "                       |  __ \                                     _   / ____|     | |      \n"
+        reporte += "                       | |__) |___  ___ _   _ _ __ ___   ___ _ __ (_) | (___   __ _| | __ _ \n"
+        reporte += "                       |  _  // _ \/ __| | | | '_ ` _ \ / _ \ '_ \     \___ \ / _` | |/ _` |\n"
+        reporte += "                       | | \ \  __/\__ \ |_| | | | | | |  __/ | | |_   ____) | (_| | | (_| |\n"
+        reporte += "                       |_|  \_\___||___/\__,_|_| |_| |_|\___|_| |_(_) |_____/ \__,_|_|\__,_|\n"
+    #    reporte = "—"*150+"\n"
+    #    reporte += "    ╱ Resumen de venta por sala ╱\n"
+    #    reporte += "—"*150+"\n\n"
         
         for sala in self.salas:
-            reporte += f"{'ღ'*80}\n\n"
+            reporte += f"{'▬'*150}\n\n"
             reporte += f"  Sala {sala.Numero}\n"
             
             total_sala = 0
@@ -70,17 +83,25 @@ class ReporteVista(QWidget):
                     reporte += f"       {funcion.Pelicula} ({funcion.Horario})\n"
                     reporte += f"           Entradas vendidas: {entradas_vendidas}\n"
                     reporte += f"           Total: ${total_funcion:,}\n\n"
-            reporte += f"{'ღ'*80}\n\n"
+            reporte += f"{'▬'*150}\n\n"
             reporte += f"Total sala {sala.Numero}:\n"
             reporte += f"Entradas vendidas: {entradas_sala}\n"
             reporte += f"Total: ${total_sala:,}\n\n"
-            reporte += f"{'ღ' * 76}\n\n"
+            reporte += f"{'▬' *150}\n\n"
         return reporte
 
     def reporte_por_funcion(self):
-        reporte = "="*80+"\n"
-        reporte += "  Resumen de venta por funcion\n"
-        reporte += "="*80+"\n\n"
+        reporte = "\n"
+        reporte += f"{'▬'*150}\n"
+        reporte += "               _____                                          ______                _   __        \n"
+        reporte += "              |  __ \                                     _  |  ____|              (_) /_/        \n"
+        reporte += "              | |__) |___  ___ _   _ _ __ ___   ___ _ __ (_) | |__ _   _ _ __   ___ _  ___  _ __  \n"
+        reporte += "              |  _  // _ \/ __| | | | '_ ` _ \ / _ \ '_ \    |  __| | | | '_ \ / __| |/ _ \| '_ \ \n"
+        reporte += "              | | \ \  __/\__ \ |_| | | | | | |  __/ | | |_  | |  | |_| | | | | (__| | (_) | | | |\n"
+        reporte += "              |_|  \_\___||___/\__,_|_| |_| |_|\___|_| |_(_) |_|   \__,_|_| |_|\___|_|\___/|_| |_|\n"
+    #    reporte = "="*150+"\n"
+    #    reporte += "  Resumen de venta por funcion\n"
+    #    reporte += "="*150+"\n\n"
         total_general = 0
         
         for sala in self.salas:
@@ -89,21 +110,31 @@ class ReporteVista(QWidget):
                     entradas_vendidas = funcion.EntradasVendidas
                     total_funcion = entradas_vendidas * 3000
                     total_general += total_funcion
-                    reporte += f"{'ღ'*80}\n\n"
+                    reporte += f"{'▬'*150}\n\n"
                     reporte += f" {funcion.Pelicula}\n"
                     reporte += f"   Sala: {sala.Numero}\n"
                     reporte += f"   Horario: {funcion.Horario}\n"
                     reporte += f"   Entradas vendidas: {entradas_vendidas}\n"
                     reporte += f"   Total: ${total_funcion:,}\n\n"
-        reporte += f"{'ღ'*80}\n\n"
+        reporte += f"{'▬'*150}\n\n"
         reporte += f"Total general: ${total_general:,}\n\n"
-        reporte += f"{'ღ'*80}\n"
+        reporte += f"{'▬'*150}\n"
         return reporte
 
     def reporte_por_horario(self):
-        reporte = "="*80+"\n"
-        reporte += "  Resumen de venta por horario\n"
-        reporte += "="*80+"\n\n"
+    
+        reporte = "\n"
+        reporte += f"{'▬'*150}\n"
+        reporte += "                _____                                          _    _                      _       \n"
+        reporte += "               |  __ \                                     _  | |  | |                    (_)      \n"
+        reporte += "               | |__) |___  ___ _   _ _ __ ___   ___ _ __ (_) | |__| | ___  _ __ __ _ _ __ _  ___  \n"
+        reporte += "               |  _  // _ \/ __| | | | '_ ` _ \ / _ \ '_ \    |  __  |/ _ \| '__/ _` | '__| |/ _ \ \n"
+        reporte += "               | | \ \  __/\__ \ |_| | | | | | |  __/ | | |_  | |  | | (_) | | | (_| | |  | | (_) |\n"
+        reporte += "               |_|  \_\___||___/\__,_|_| |_| |_|\___|_| |_(_) |_|  |_|\___/|_|  \__,_|_|  |_|\___/ \n"
+    
+    #    reporte = "="*150+"\n"
+    #    reporte += "  Resumen de venta por horario\n"
+    #    reporte += "="*150+"\n\n"
         horarios = {}
         
         for sala in self.salas:
@@ -125,7 +156,7 @@ class ReporteVista(QWidget):
         total_general = 0
         
         for horario, datos in horarios.items():
-            reporte += f"{'ღ' * 80}\n\n"
+            reporte += f"{'▬' * 150}\n\n"
             reporte += f" {horario.upper()}\n"
             
             for func in datos['funciones']:
@@ -135,19 +166,31 @@ class ReporteVista(QWidget):
             reporte += f"   Entradas vendidas: {datos['entradas']}\n"
             reporte += f"   Total: ${datos['total']:,}\n\n"
             total_general += datos['total']
-        reporte += f"{'ღ'*80}\n\n"
+        reporte += f"{'▬'*150}\n\n"
         reporte += f"Total general: ${total_general:,}\n\n"
-        reporte += f"{'ღ'*80}\n"
+        reporte += f"{'▬'*150}\n"
         return reporte
 
     def reporte_general(self):
-        reporte = "="*80+"\n"
-        reporte += "  Resumen general del dia\n"
-        reporte += "="*80+"\n\n"
+    
+        reporte = "\n"
+        reporte += f"{'▬'*150}\n"
+        reporte += "                     _____                                          _____  __      \n"
+        reporte += "                    |  __ \                                     _  |  __ \/_/      \n"
+        reporte += "                    | |__) |___  ___ _   _ _ __ ___   ___ _ __ (_) | |  | |_  __ _ \n"
+        reporte += "                    |  _  // _ \/ __| | | | '_ ` _ \ / _ \ '_ \    | |  | | |/ _` |\n"
+        reporte += "                    | | \ \  __/\__ \ |_| | | | | | |  __/ | | |_  | |__| | | (_| |\n"
+        reporte += "                    |_|  \_\___||___/\__,_|_| |_| |_|\___|_| |_(_) |_____/|_|\__,_|\n"
+    
+    #    reporte = "="*150+"\n"
+    #    reporte += "  Resumen general del dia\n"
+    #    reporte += "="*150+"\n\n"
+
+
         total_entradas = 0
         total_recaudacion = 0
-        reporte += "  Detalle por sala:\n"
-        reporte += f"{'ღ' * 80}\n\n"
+    #    reporte += "  Detalle por sala:\n"
+        reporte += f"{'▬' * 150}\n\n"
         
         for sala in self.salas:
             total_sala = 0
@@ -163,18 +206,18 @@ class ReporteVista(QWidget):
             total_recaudacion += total_sala
             reporte += f"Sala {sala.Numero}:\n"
             reporte += f"Entradas: {entradas_sala} | Total: ${total_sala:,}\n\n"
-        reporte += f"{'ღ'*80}\n\n"
+        reporte += f"{'▬'*150}\n\n"
         reporte += "Estadisticas generales:\n"
         reporte += f"   Total de entradas vendidas: {total_entradas}\n"
         reporte += f"   Precio por entrada: $3,000\n"
         reporte += f"   Capacidad total del cine: 75 asientos (3 salas)\n\n"
-        reporte += f"  {'ღ'*80}\n\n"
+        reporte += f"  {'▬'*150}\n\n"
 
         if total_entradas > 0:
             ocupacion = (total_entradas / 75) * 100
             reporte += f"Ocupación del día: {ocupacion:.1f}%\n"
         reporte += f"Total del dia: ${total_recaudacion:,}\n\n"
-        reporte += f"  {'ღ'*80}\n"
+        reporte += f"  {'▬'*150}\n"
         return reporte
 
     def volver_menu_admin(self):
