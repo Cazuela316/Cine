@@ -14,6 +14,7 @@ class InicioVista(QWidget):
 
     def inicializar(self):
         self.NombredePelis = {
+        # Esto sirve para "Etiquetar" las peliculas, para que tengan nombre
         "Shrek": "Peli1",
         "Five Nights At Freddy's": "Peli2", 
         "Five Nights At Freddy's 2": "Peli3",
@@ -27,6 +28,7 @@ class InicioVista(QWidget):
         Hola_label = QLabel (self)
         Hola_label.setText("¡Bienvenido a Cinema!")
         Hola_label.setFont(QFont('Belanosima', 30))
+        #El "SetSytleSheet" sirve para decorar usando CSS, todos los comandos de css sirven para PyQt6
         Hola_label.setStyleSheet("color: #e46e2a;")
         Hola_label.adjustSize()
         Hola_label.move(520, 15)
@@ -41,12 +43,14 @@ class InicioVista(QWidget):
         sala1_label.setText("Sala 1")
         sala1_label.setFont(QFont('Lokeya', 18))
         sala1_label.setGeometry(100, 150, 150, 40)
-
+    #   Este for sirve para poner las imagenes, junto con el boton para poder comprar la entrada 
         for i, funcion in enumerate(self.salas[0].Funciones): 
             if funcion:
                 asientos_disponibles = sum(1 for fila in funcion.Asientos for asiento in fila if asiento == 0)
                 imagen_label = QLabel(self)
                 nombre_archivo = self.NombredePelis.get(funcion.Pelicula, funcion.Pelicula)
+                # Este if sirve para verificar si la pelicula esta disponible (Si es que tiene asientos disponibles)
+                # Si es que no, se reemplaza la imagen del poster con una señal de "Sold Out"
                 if asientos_disponibles == 0:
                     pixmap = QPixmap(f"img/{nombre_archivo}x.png")
                 else:
@@ -86,7 +90,6 @@ class InicioVista(QWidget):
 
         sala3_label = QLabel(self)
         sala3_label.setText("Sala 3")
-        # Ejemplo de como ponerle color a una letra sala3_label.setStyleSheet("Color: #278EF5")
         sala3_label.setFont(QFont('Lokeya', 18))
         sala3_label.setGeometry(100, 550, 150, 40)
 
